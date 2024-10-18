@@ -1,0 +1,29 @@
+﻿<Window x:Class="Twm.Core.CustomProperties.Editors.DataSeriesParamWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:converters1="clr-namespace:Twm.Core.Converters"
+        xmlns:controls="clr-namespace:Twm.Core.CustomProperties.Controls"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Title="Instrument parameters" Height="250" Width="500">
+    <Window.Resources>
+        <converters1:ListOfElementWithErrorsToBoolConverter x:Key="ErrorsToBoolConverter"/>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <controls:DataSeriesControl x:Name="paramView" DataContext="{Binding}" Grid.Row="0"/>
+            
+            <StackPanel Orientation="Horizontal" Grid.Column="0"  Grid.Row="1"   HorizontalAlignment="Right"  >
+            <Button FontSize="14" Width="75" Height="25" Content="Cancel" Margin="0,0,5,0" IsCancel="True"/>
+            <Button FontSize="14" Width="75" Height="25" Content="OK" Click="ButtonBase_OnClick"  Margin="0,0,5,0" IsDefault="True" IsEnabled="{Binding IsParamsValid}">
+            </Button>
+        </StackPanel>
+    </Grid>
+</Window>

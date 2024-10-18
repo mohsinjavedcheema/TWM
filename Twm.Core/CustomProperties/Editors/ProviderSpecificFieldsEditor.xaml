@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="Twm.Core.CustomProperties.Editors.ProviderSpecificFieldsEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Twm.Core.CustomProperties.Editors"
+             mc:Ignorable="d" >
+    <Grid>
+        <TextBox x:Name="textBox" IsReadOnly="True"  />
+        <Button x:Name="button" Click="ButtonBase_OnClick" Width="25" Content="..." HorizontalAlignment="Right" />
+    </Grid>
+</UserControl>

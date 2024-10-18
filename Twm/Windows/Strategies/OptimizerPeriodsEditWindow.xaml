@@ -1,0 +1,70 @@
+﻿<Window x:Class="Twm.Windows.Strategies.OptimizerPeriodsEditWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:optimizer="clr-namespace:Twm.Views.Strategies.Optimizer"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Period constructor" Height="750" Width="1000">
+    <Grid Background="WhiteSmoke">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="0" ItemsSource="{Binding Periods}" VerticalAlignment="Bottom" 
+                  x:Name="listView" 
+                          SelectedItem="{Binding SelectedPeriod}">
+
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="1"/>
+                                    </Grid.RowDefinitions>
+                                    <optimizer:OptimizerPeriodControl DataContext="{Binding}" HorizontalAlignment="Right" Padding="{Binding RightOffset}"/>
+                                    <Border Grid.Row="1" BorderBrush="DarkGray" BorderThickness="1" Height="2"/>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin"  Value="2,0" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Height"  Value="70" />
+                    <Style.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="LightGray" />
+                        </MultiTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <StackPanel Background="GhostWhite" Orientation="Horizontal" Grid.Column="0"  Grid.ColumnSpan="2" Grid.Row="1"   HorizontalAlignment="Left"  >
+            <Button FontSize="14" Width="75" Height="25" Content="Add" Command="{Binding AddPeriodCommand}" Margin="15,0,0,0"/>
+            <Button FontSize="14" Width="75" Height="25" Content="Delete" Command="{Binding DeletePeriodCommand}" IsEnabled="{Binding IsPeriodDeleteEnabled}"  Margin="5,0,0,0"  />
+            <CheckBox Content="Last live period" IsChecked="{Binding IsLastPeriodLive}" Command="{Binding SetPeriodLiveCommand}" VerticalAlignment="Center" Margin="15,0,0,0" />
+        </StackPanel>
+
+        <StackPanel Background="GhostWhite" Orientation="Horizontal" Grid.Column="0"  Grid.ColumnSpan="2" Grid.Row="1"   HorizontalAlignment="Right"  >
+            <Button FontSize="14" Width="75" Height="25" Content="Cancel" Margin="0,0,5,0" IsCancel="True"/>
+            <Button FontSize="14" Width="75" Height="25" Content="OK" Click="ButtonBase_OnClick"  Margin="0,0,5,0"  />
+        </StackPanel>
+    </Grid>
+</Window>

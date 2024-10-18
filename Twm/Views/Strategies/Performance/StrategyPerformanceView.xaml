@@ -1,0 +1,141 @@
+﻿<UserControl x:Class="Twm.Views.Strategies.Performance.StrategyPerformanceView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:performance="clr-namespace:Twm.Views.Strategies.Performance"
+             xmlns:chart="clr-namespace:Twm.Views.Chart"
+             xmlns:controls="clr-namespace:Twm.Controls"
+             xmlns:strategies="clr-namespace:Twm.Windows.Strategies"
+             xmlns:enums="clr-namespace:Twm.Core.Enums;assembly=Twm.Core"
+             xmlns:converters="clr-namespace:Twm.Core.Converters;assembly=Twm.Core"
+             mc:Ignorable="d" 
+             x:Name="control"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.Style>
+            <Style TargetType="Grid" >
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding}" Value="{x:Null}">
+                        <Setter Property="IsEnabled" Value="false"/>
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+        </Grid.Style>
+
+        <Grid.Resources>
+            <converters:BoolToVisibilityConverter x:Key="boolToVisibilityConverter" />
+            <DataTemplate x:Key="SummaryTemplate">
+                <performance:SummaryView/>
+            </DataTemplate>
+            <DataTemplate x:Key="AnalysisTemplate">
+                <performance:AnalysisView/>
+            </DataTemplate>
+            <DataTemplate x:Key="TradesTemplate">
+                <performance:TradesView/>
+            </DataTemplate>
+            <DataTemplate x:Key="OrdersTemplate">
+                <performance:OrdersView/>
+            </DataTemplate>
+            <DataTemplate x:Key="ChartTemplate">
+                <chart:ChartView/>
+            </DataTemplate>
+            <DataTemplate x:Key="RiskLevelTemplate">
+                <performance:RiskLevelView/>
+            </DataTemplate>
+
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,5" >
+            <Label  Content="Trade" FontSize="14">
+                <Label.Style>
+                    <Style TargetType="Label">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsShowTradeSource}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsShowTradeSource}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Label.Style>
+            </Label>
+            
+            <ComboBox Height="25" 
+                      x:Name="cbTradeType"
+                      ItemsSource="{Binding Path=TradeSourceTypes}"
+                      SelectedValue="{Binding Path=CurrentTradeSourceType, Mode=TwoWay}"
+                      VerticalContentAlignment="Center"
+                      FontSize="14" Width="100">
+                <ComboBox.Style>
+                    <Style TargetType="ComboBox">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsShowTradeSource}" Value="True">
+                                <Setter Property="Visibility" Value="Visible"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsShowTradeSource}" Value="False">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ComboBox.Style>
+            </ComboBox>
+
+            <Label  Content="Display" FontSize="14">
+                
+            </Label>
+                    <ComboBox Height="25" 
+                      x:Name="cbSection"
+                      ItemsSource="{Binding Path=Sections}"
+                      SelectedValue="{Binding Path=CurrentSection, Mode=TwoWay}"
+                      VerticalContentAlignment="Center"
+                      FontSize="14" Width="100">
+                
+            </ComboBox>
+
+           
+        </StackPanel>
+
+        <ContentControl x:Name="contentControl" Grid.Row="1" Margin="0,0"  Content="{Binding SectionModel}" >
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <!--<Setter Property="ContentTemplate" Value="{StaticResource SummaryTemplate}" />-->
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding CurrentSection}" Value="Summary">
+                            <Setter Property="ContentTemplate" Value="{StaticResource SummaryTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentSection}" Value="Chart">
+                            <Setter Property="ContentTemplate" Value="{StaticResource ChartTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentSection}" Value="Analysis">
+                            <Setter Property="ContentTemplate" Value="{StaticResource AnalysisTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentSection}" Value="Trades">
+                            <Setter Property="ContentTemplate" Value="{StaticResource TradesTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentSection}" Value="Orders">
+                            <Setter Property="ContentTemplate" Value="{StaticResource OrdersTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding CurrentSection}" Value="RiskLevels">
+                            <Setter Property="ContentTemplate" Value="{StaticResource RiskLevelTemplate}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
+
+
+        <controls:LoadingPanel x:Name="loadingPanel" Grid.Row="0" Grid.RowSpan="2"
+                               IsLoading="{Binding IsBusy, Mode=OneWay}"
+                               Message="{Binding Message}"
+                               SubMessage="{Binding SubMessage}" />
+    </Grid>
+</UserControl>

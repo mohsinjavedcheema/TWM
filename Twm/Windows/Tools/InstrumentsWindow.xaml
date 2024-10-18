@@ -1,0 +1,100 @@
+﻿<Window x:Class="Twm.Windows.Tools.InstrumentsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:views="clr-namespace:Twm.Views"
+        xmlns:instruments="clr-namespace:Twm.Views.Instruments"
+        xmlns:ui2="clr-namespace:Twm.Core.DataProviders.Bybit.UI;assembly=Twm.Core"
+        xmlns:ui3="clr-namespace:Twm.Core.DataProviders.Binance.UI;assembly=Twm.Core"
+        xmlns:controls="clr-namespace:Twm.Controls" xmlns:views1="clr-namespace:Twm.Core.UI.Views;assembly=Twm.Core"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Icon="/Assets/favicon.ico"
+
+        Title="Instruments" Height="600" Width="1100">
+    <Grid Background="#55D3D3D3">
+        <Grid.Resources>
+            <DataTemplate x:Key="NoTemplate">
+                <views1:NoTemplateView/>
+            </DataTemplate>
+            <DataTemplate x:Key="BybitInstrumentsTemplate">
+                <ui2:BybitInstrumentsView/>
+            </DataTemplate>
+            <DataTemplate x:Key="BinanceInstrumentsTemplate">
+                <ui3:BinanceInstrumentsView/>
+            </DataTemplate>
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="TWM Symbols" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+        <instruments:InstrumentsView DataContext="{Binding}" Grid.Row="1" Grid.Column="0"/>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0"  Grid.Row="2"  Margin="2" HorizontalAlignment="Left"  >
+            <Button FontSize="14" Width="75" Height="25" Content="Remove" Margin="5,0,5,0" IsEnabled="{Binding IsRemoveEnable}" Command="{Binding RemoveCommand}"/>
+            <Button FontSize="14" Width="75" Height="25" Content="Remove all" Margin="5,0,5,0" IsEnabled="{Binding IsRemoveAllEnable}" Command="{Binding RemoveAllCommand}"/>
+        </StackPanel>
+
+        <Label Grid.Row="0" Grid.Column="2" Content="{Binding SelectedConnection}" FontSize="14" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        <ContentControl  Grid.Row="1"  Grid.Column="2" Content="{Binding SelectedConnectionInstrumentManager}">
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SelectedConnection.IsConnected}" Value="False">
+                            <Setter Property="ContentTemplate" Value="{StaticResource NoTemplate}" />
+                        </DataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding SelectedConnection.DataProvider}" Value="Bybit" />
+                                <Condition Binding="{Binding SelectedConnection.IsConnected}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="ContentTemplate" Value="{StaticResource BybitInstrumentsTemplate}" />
+                        </MultiDataTrigger>
+                        <MultiDataTrigger>
+                            <MultiDataTrigger.Conditions>
+                                <Condition Binding="{Binding SelectedConnection.DataProvider}" Value="Binance" />
+                                <Condition Binding="{Binding SelectedConnection.IsConnected}" Value="True" />
+                            </MultiDataTrigger.Conditions>
+                            <Setter Property="ContentTemplate" Value="{StaticResource BinanceInstrumentsTemplate}" />
+                        </MultiDataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
+        <controls:LoadingPanel x:Name="loadingPanel"
+                               Grid.Row="1" 
+                               Grid.Column="2"
+                               IsLoading="{Binding SelectedConnectionInstrumentManager.IsBusy, Mode=OneWay}"
+                               Message="{Binding SelectedConnectionInstrumentManager.Message}"
+                               SubMessage="{Binding SelectedConnectionInstrumentManager.SubMessage}" />
+
+        <StackPanel Orientation="Horizontal" Grid.Column="2"  Grid.Row="2"  Margin="2" HorizontalAlignment="Left"  >
+            <Button FontSize="14" Width="75" Height="25" Content="Add" Margin="0,0,5,0" 
+                    IsEnabled="{Binding SelectedConnectionInstrumentManager.IsAddEnable}"
+                    Command="{Binding SelectedConnectionInstrumentManager.AddCommand}"/>
+            <Button FontSize="14" Width="75" Height="25" Content="Add all" Margin="0,0,5,0"  
+                    IsEnabled="{Binding SelectedConnectionInstrumentManager.IsAddAllEnable}"
+                    Command="{Binding SelectedConnectionInstrumentManager.AddAllCommand}"/>
+        </StackPanel>
+
+
+        
+
+        <StackPanel Orientation="Horizontal" Grid.Column="2"  Grid.Row="2"  Margin="2" HorizontalAlignment="Right"  >
+            <Button FontSize="14" Width="75" Height="25" Content="OK" Margin="0,0,5,0" Click="ButtonOKClick"  Command="{Binding CancelFetchDataCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

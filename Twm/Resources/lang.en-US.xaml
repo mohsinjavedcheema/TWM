@@ -1,0 +1,201 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:v="clr-namespace:System;assembly=mscorlib">
+    <!-- Main window -->
+    <v:String x:Key="lImportISOS">Import ISOS</v:String>
+    <v:String x:Key="lImportIS">Import IS</v:String>
+    <v:String x:Key="lImportOS">Import OS</v:String>
+
+    <v:String x:Key="lAddWFT">Add WFT</v:String>
+    
+    <v:String x:Key="lISStartDate">IS Start Date</v:String>
+    <v:String x:Key="lISEndDate">IS End Date</v:String>
+    <v:String x:Key="lOSStartDate">OS Start Date</v:String>
+    <v:String x:Key="lOSEndDate">OS End Date</v:String>
+    <v:String x:Key="lStartDate">Start Date</v:String>
+    <v:String x:Key="lEndDate">End Date</v:String>
+
+
+    <v:String x:Key="lSymbol">Symbol</v:String>
+    <v:String x:Key="lPath">Path</v:String>
+    <v:String x:Key="lImport">Import</v:String>
+    <v:String x:Key="lDateFormat">Date format</v:String>
+
+    <v:String x:Key="lPerformance">Performance</v:String>
+    <v:String x:Key="lAllTrades">All Trades</v:String>
+    <v:String x:Key="lLongTrades">Long Trades</v:String>
+    <v:String x:Key="lShortTrades">Short Trades</v:String>
+
+    <v:String x:Key="lISAllTrades">IS All Trades</v:String>
+    <v:String x:Key="lOSAllTrades">OS All Trades</v:String>
+    <v:String x:Key="lComparison">Comparision</v:String>
+    <v:String x:Key="lScore">Score</v:String>
+
+    <v:String x:Key="lItem">Item</v:String>
+
+    <v:String x:Key="lValue">Value</v:String>
+    <v:String x:Key="lName">Name</v:String>
+
+    <v:String x:Key="lAvgIS">Avg. IS</v:String>
+    <v:String x:Key="lAvgOS">Avg. OS</v:String>
+
+    <v:String x:Key="lAdd">Add</v:String>
+    <v:String x:Key="lDelete">Delete</v:String>
+
+    <v:String x:Key="lComment">Comment</v:String>
+
+
+    
+    <v:String x:Key="lAddToPortfolio">Add to portfolio</v:String>
+
+    <v:String x:Key="lDeleteSampleResult">Delete sample result</v:String>
+    <v:String x:Key="lDeleteWalkForwardTest">Delete walk forward test</v:String>
+    <v:String x:Key="lDeletePortfolio">Delete portfolio</v:String>
+
+    <v:String x:Key="lCalc">Calc</v:String>
+
+    <v:String x:Key="lRun">Run</v:String>
+
+    <v:String x:Key="lSave">Save</v:String>
+
+    <v:String x:Key="lOk">OK</v:String>
+    <v:String x:Key="lCancel">Cancel</v:String>
+
+    <v:String x:Key="lTradeNumber">#</v:String>
+    <v:String x:Key="lInstrument">Instrument</v:String>
+    <v:String x:Key="lAccount">Account</v:String>
+    <v:String x:Key="lStrategy">Strategy</v:String>
+    <v:String x:Key="lMarketPosition">Position</v:String>
+    <v:String x:Key="lQty">Qty</v:String>
+    <v:String x:Key="lEntryPrice">Entry Price</v:String>
+    <v:String x:Key="lExitPrice">Exit Price</v:String>
+    <v:String x:Key="lEntryTime">Entry Date</v:String>
+    <v:String x:Key="lExitTime">Exit Date</v:String>
+    <v:String x:Key="lEntryName">Entry name</v:String>
+    <v:String x:Key="lExitName">Exit name</v:String>
+    <v:String x:Key="lProfit">Profit</v:String>
+    <v:String x:Key="lCumProfit">Cum profit</v:String>
+    <v:String x:Key="lCommission">Commission</v:String>
+    <v:String x:Key="lMae">MAE</v:String>
+    <v:String x:Key="lMfe">MFE</v:String>
+    <v:String x:Key="lEtd">Etd</v:String>
+    <v:String x:Key="lBars">Bars</v:String>
+
+    <v:String x:Key="lResultId">ISOS ResultId</v:String>
+    <v:String x:Key="lTestDate">Test Date</v:String>
+    <v:String x:Key="lTimeFrame">TimeFrame</v:String>
+    <v:String x:Key="lISPF">IS PF</v:String>
+    <v:String x:Key="lISNP">IS NP</v:String>
+    <v:String x:Key="lISTSI">IS TSI</v:String>
+    <v:String x:Key="lISMAXDD">IS Max DD</v:String>
+    <v:String x:Key="lISTrades">IS Trades</v:String>
+    <v:String x:Key="lOSPF">OS PF</v:String>
+    <v:String x:Key="lOSNP">OS NP</v:String>
+    <v:String x:Key="lOSTSI">OS TSI</v:String>
+    <v:String x:Key="lOSMAXDD">OS Max DD</v:String>
+    <v:String x:Key="lOSTrades"> OS Trades</v:String>
+
+    <v:String x:Key="lWFTestId">WF Test Id</v:String>
+    <v:String x:Key="lViewSampleResultInNewTab">View in new tab</v:String>
+
+    <v:String x:Key="lNumberOfTests">Number of tests</v:String>
+    <v:String x:Key="lOSPercent">OS percent</v:String>
+
+    <v:String x:Key="lWOSStartDate">WOS Start</v:String>
+    <v:String x:Key="lWOSEndDate">WOS End</v:String>
+
+    
+    <v:String x:Key="lWOSLiveStartDate">WOS Live Start</v:String>
+    <v:String x:Key="lWOSLiveEndDate">WOS Live End</v:String>
+
+    <v:String x:Key="lOSLiveStartDate">OS Live Start</v:String>
+    <v:String x:Key="lOSLiveEndDate">OS Live End</v:String>
+
+    <v:String x:Key="lPF">PF</v:String>
+    <v:String x:Key="lNP">NP</v:String>
+    <v:String x:Key="lTrades">Trades</v:String>
+
+
+
+    <v:String x:Key="lMinIncrement">Min Increment (points)</v:String>
+
+    <v:String x:Key="lTickPrice">TickPrice (USD)</v:String>
+    <v:String x:Key="lSlipageTicks">Slipage Ticks (entry+exit)</v:String>
+    <v:String x:Key="lCommissionOneTrade">Commision 1 Trade (USD) In Out</v:String>
+    <v:String x:Key="lTradeCosts">1 trade costs</v:String>
+    <v:String x:Key="lTradeCostCoef">1 trade cost coef</v:String>
+    <v:String x:Key="lTradeCostWithCoef">1 trade cost with coef</v:String>
+    <v:String x:Key="lMarginIntraday">Margin Intraday</v:String>
+    <v:String x:Key="lLotsize">Lotsize</v:String>
+    <v:String x:Key="lUAssetName">Underlying asset name</v:String>
+    <v:String x:Key="lUAssetLastPrice">Underlying asset last price</v:String>
+    <v:String x:Key="lUAssetContractSizeMultiplier">Undetlying asset contract size multiplier</v:String>
+    <v:String x:Key="lRealTurnaround">Real turnaround</v:String>
+    <v:String x:Key="lCashRequiredForTurnaround">Cash required for turnaround</v:String>
+    <v:String x:Key="lMaxOSDrawdown">Max OS drawdown</v:String>
+    <v:String x:Key="lCashRequiredForDrawdown">Cash required for drawdown</v:String>
+
+
+    <v:String x:Key="lShowISMonteCarlo">IS MonteCarlo</v:String>
+    <v:String x:Key="lShowOSMonteCarlo">OS MonteCarlo</v:String>
+    <v:String x:Key="lShowWFAMonteCarlo">WFA MonteCarlo</v:String>
+    <v:String x:Key="lShowPortfolioMonteCarlo">Portfolio MonteCarlo</v:String>
+
+    <v:String x:Key="lNumberOfRuns">Number of runs</v:String>
+    <v:String x:Key="lDivider">Divider</v:String>
+
+    <v:String x:Key="lNotes">Notes</v:String>
+
+    <v:String x:Key="lNum">Num</v:String>
+    <v:String x:Key="lCheck">Check</v:String>
+    <v:String x:Key="lISDates">IS Dates</v:String>
+    <v:String x:Key="lOSDates">OS Dates</v:String>
+
+    <v:String x:Key="lLivePeriods">Live periods</v:String>
+    <v:String x:Key="lCriticalValue">Critical value</v:String>
+    <v:String x:Key="lCreationDate">Creation Date</v:String>
+    <v:String x:Key="lPortfolioId">Portfolio Id</v:String>
+
+    <v:String x:Key="lUseInPortfolio">Use in Portfolio</v:String>
+
+    <v:String x:Key="lStatus">Status</v:String>
+    <v:String x:Key="lEnding">Ending</v:String>
+    <v:String x:Key="lUser">User</v:String>
+    <v:String x:Key="lBuy">Buy</v:String>
+    <v:String x:Key="lExtend">Extend</v:String>
+    <v:String x:Key="ldemo">Demo</v:String>
+    <v:String x:Key="lsubscribe">Subscribe</v:String>
+
+    <v:String x:Key="lEmail">Email</v:String>
+
+    <v:String x:Key="lServerConnectionError">Server connection error</v:String>
+    <v:String x:Key="lUnknownError">Unknown error</v:String>
+    <v:String x:Key="lUnauthorizedError">You are not authorized</v:String>
+    <v:String x:Key="lPleaseBuySubscription">Please buy subscription</v:String>
+    <v:String x:Key="lPleaseExtendSubscription">Please extend subscription</v:String>
+    <v:String x:Key="lInputEmail">Input Email</v:String>
+
+    <v:String x:Key="lOrderAction">Action</v:String>
+    <v:String x:Key="lOrderType">Type</v:String>
+    <v:String x:Key="lOrderLimit">Limit</v:String>
+    <v:String x:Key="lOrderStop">Stop</v:String>
+    <v:String x:Key="lOrderState">State</v:String>
+    <v:String x:Key="lOrderFilled">Filled</v:String>
+    <v:String x:Key="lAvgPrice">Avg. price</v:String>
+    <v:String x:Key="lRemaining">Remaining</v:String>
+    <v:String x:Key="lOrderName">Name</v:String>
+    <v:String x:Key="lOCO">OCO</v:String>
+    <v:String x:Key="lTIF">TIF</v:String>
+    <v:String x:Key="lID">ID</v:String>
+    <v:String x:Key="lConnect">Connect</v:String>
+    <v:String x:Key="lOrderTime">Time</v:String>
+    <v:String x:Key="lFillTime">Fill time</v:String>
+    <v:String x:Key="lInitTime">Init time</v:String>
+
+    <!-- Summary Hints -->
+    <v:String x:Key="np">Total net profit in USD</v:String>
+    <v:String x:Key="sharpe">(cumulative profit/total days * 30.5)/stDev of monthly profits</v:String>
+    <v:String x:Key="pf">gross profit/gross loss</v:String>
+    <v:String x:Key="mdd">Maximum draw down in USD from a point in equity</v:String>
+
+</ResourceDictionary>

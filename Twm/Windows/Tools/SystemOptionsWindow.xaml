@@ -1,0 +1,250 @@
+﻿<Window x:Class="Twm.Windows.Tools.SystemOptionsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Twm.Windows"
+        xmlns:viewOptions="clr-namespace:Twm.Views.Options"
+        xmlns:options1="clr-namespace:Twm.ViewModels.Options"
+        xmlns:performance="clr-namespace:Twm.Views.Strategies.Performance"
+        mc:Ignorable="d"
+        Icon="/Assets/favicon.ico"
+
+        WindowStartupLocation="CenterScreen"
+        Title="Options" Height="450" Width="900">
+    <Grid>
+        <Grid.Resources>
+            <DataTemplate x:Key="GeneralProjectTemplate">
+                <viewOptions:GeneralProjectView/>
+            </DataTemplate>
+            <DataTemplate x:Key="GeneralDisplayTemplate">
+                <viewOptions:GeneralDisplayView/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="GeneralHistoricalDataTemplate">
+                <viewOptions:GeneralHistoricalDataView/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="GeneralPreferencesTemplate">
+                <viewOptions:GeneralPreferencesView/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="GeneralEmailTemplate">
+                <viewOptions:GeneralEmailView/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="GeneralServerApiTemplate">
+                <viewOptions:GeneralServerApiView/>
+            </DataTemplate>
+
+            <DataTemplate x:Key="CalculationOptimizerTemplate">
+                <viewOptions:CalculationOptimizerView/>
+            </DataTemplate>
+
+            <Style x:Key="TreeViewItemFocusVisual">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+            <PathGeometry x:Key="TreeArrow" Figures="M0,0 L0,6 L6,0 z"/>
+
+            <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}" >
+                <Setter Property="Focusable" Value="False"/>
+                <Setter Property="Width" Value="16"/>
+                <Setter Property="Height" Value="16"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Border Width="16" Height="16" Background="Transparent" Padding="5,5,5,5">
+                                <Path x:Name="ExpandPath" Fill="Transparent" Stroke="#FF989898" Data="{StaticResource TreeArrow}">
+                                    <Path.RenderTransform>
+                                        <RotateTransform Angle="135" CenterX="3" CenterY="3"/>
+                                    </Path.RenderTransform>
+                                </Path>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Stroke" TargetName="ExpandPath" Value="#FF1BBBFA"/>
+                                    <Setter Property="Fill" TargetName="ExpandPath" Value="Transparent"/>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter Property="RenderTransform" TargetName="ExpandPath">
+                                        <Setter.Value>
+                                            <RotateTransform Angle="180" CenterX="3" CenterY="3"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="Fill" TargetName="ExpandPath" Value="#FF595959"/>
+                                    <Setter Property="Stroke" TargetName="ExpandPath" Value="#FF262626"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="TreeViewItemStyle1" TargetType="{x:Type TreeViewItem}">
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="HorizontalContentAlignment" Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="VerticalContentAlignment" Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="Padding" Value="0,0,0,0"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+                <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TreeViewItem}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition MinWidth="19" Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <!-- created ItemRowGrid to contain both togglebutton and border -->
+                                <Grid x:Name="ItemRowGrid" Grid.ColumnSpan="3" Margin="1.5,0,0,0">
+                                    <ToggleButton x:Name="Expander" ClickMode="Press" IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}" Style="{StaticResource ExpandCollapseToggleStyle}" HorizontalAlignment="Left" d:LayoutOverrides="Width, LeftMargin, RightMargin"/>
+                                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Margin="17.5,0,-17.5,0">
+                                        <ContentPresenter x:Name="PART_Header" ContentSource="Header" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </Border>
+                                </Grid>
+                                <ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1"/>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsExpanded" Value="false">
+                                    <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed"/>
+                                </Trigger>
+                                <Trigger Property="HasItems" Value="false">
+                                    <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
+                                </Trigger>
+                                <Trigger Property="IsSelected" Value="true">
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}"/>
+                                    <!-- setting highlight target to created ItemRowGrid instead of border -->
+                                    <Setter Property="Background" TargetName="ItemRowGrid" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsSelected" Value="true"/>
+                                        <Condition Property="IsSelectionActive" Value="false"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+        </Grid.Resources>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+
+        <TreeView x:Name="treeView" Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" ItemsSource="{Binding Categories}" 
+                  SelectedItemChanged="TreeView_SelectedItemChanged">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type options1:CategoryViewModel }" ItemsSource="{Binding Groups}" >
+                    <Grid HorizontalAlignment="Stretch" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" FontSize="14" 
+                                   Foreground="#FF676A66" 
+                                   Text="{Binding Path=Name}" Grid.Column="1"/>
+                    </Grid>
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type options1:GroupViewModel }" >
+                    <Grid HorizontalAlignment="Stretch" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.05*"/>
+                            <ColumnDefinition Width="1*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" FontSize="14" 
+                                   Foreground="#FF676A66" 
+                                   Text="{Binding Path=Name}" Grid.Column="1"/>
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle1}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Style.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightGray"/>
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Normal" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+        </TreeView>
+
+        <ContentControl  Grid.Row="0" Grid.RowSpan="3" Grid.Column="1" Content="{Binding SystemOptions}">
+            <ContentControl.Style>
+                <Style TargetType="{x:Type ContentControl}">
+                    <Setter Property="ContentTemplate" Value="{StaticResource GeneralProjectTemplate}" />
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding SystemOptions.SelectedCategory}" Value="Calculation">
+                            <Setter Property="ContentTemplate" Value="{StaticResource CalculationOptimizerTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SystemOptions.SelectedGroup}" Value="General">
+                            <Setter Property="ContentTemplate" Value="{StaticResource GeneralProjectTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SystemOptions.SelectedGroup}" Value="Display">
+                            <Setter Property="ContentTemplate" Value="{StaticResource GeneralDisplayTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SystemOptions.SelectedGroup}" Value="HistoricalData">
+                            <Setter Property="ContentTemplate" Value="{StaticResource GeneralHistoricalDataTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SystemOptions.SelectedGroup}" Value="Preferences">
+                            <Setter Property="ContentTemplate" Value="{StaticResource GeneralPreferencesTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SystemOptions.SelectedGroup}" Value="Email">
+                            <Setter Property="ContentTemplate" Value="{StaticResource GeneralEmailTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SystemOptions.SelectedGroup}" Value="Api">
+                            <Setter Property="ContentTemplate" Value="{StaticResource GeneralServerApiTemplate}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding SystemOptions.SelectedGroup}" Value="Optimizer">
+                            <Setter Property="ContentTemplate" Value="{StaticResource CalculationOptimizerTemplate}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ContentControl.Style>
+        </ContentControl>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="3" Margin="2" HorizontalAlignment="Right" >
+
+            <Button FontSize="14" Width="75" Height="25" Content="OK" Margin="0,0,5,0" Click="ButtonBase_OnClick" />
+            <Button FontSize="14" Width="75" Height="25" Content="Cancel" Margin="0,0,5,0" IsCancel="True"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

@@ -1,0 +1,1232 @@
+﻿<UserControl x:Class="Twm.Views.Strategies.Optimizer.OptimizerPeriodView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Twm.Views.Strategies.Optimizer"
+             xmlns:performance="clr-namespace:Twm.Views.Strategies.Performance"
+             xmlns:optimizer="clr-namespace:Twm.ViewModels.Strategies.Optimizer"
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:classes="clr-namespace:Twm.Classes"
+
+             xmlns:converters="clr-namespace:Twm.Core.Converters;assembly=Twm.Core"
+             xmlns:controls="clr-namespace:Twm.Core.UI.Controls;assembly=Twm.Core"
+             xmlns:controls1="clr-namespace:Twm.Controls"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid x:Name="grid">
+
+        <Grid.Resources>
+
+            <converters:BoolNegateConverter x:Key="boolNegateConverter" />
+
+
+            <Style TargetType="{x:Type TabItem}">
+                <Setter Property="Foreground" Value="DimGray" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TabItem}">
+                            <Grid>
+                                <Border
+                                    Name="Border"
+                                    Margin="0,0,-4,0"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="Transparent"
+                                    BorderThickness="2,2,2,0"
+
+                                    CornerRadius="2,12,0,0">
+                                    <ContentPresenter x:Name="ContentSite"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"
+                                                      ContentSource="Header"
+                                                      Margin="12,2,12,2"
+                                                      RecognizesAccessKey="True" />
+                                </Border>
+                            </Grid>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Panel.ZIndex" Value="100" />
+
+                                    <Setter TargetName="Border" Property="BorderThickness" Value="2,2,2,0" />
+                                    <Setter TargetName="Border" Property="BorderBrush" Value="DimGray" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+
+
+                                    <Setter Property="Foreground" Value="LightGray" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid x:Name="topHelperGrid" Background="Aqua" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch">
+            <Button x:Name="topButtonGrid" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch"
+                    HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" />
+        </Grid>
+
+
+        <Expander Grid.Column="0" Grid.Row="0" Margin="0,0" HorizontalAlignment="Left"
+                  Height="{Binding ElementName=topHelperGrid, Path=ActualHeight, Mode=OneWay}" Name="expanderTop"
+                  Background="LightGray" Visibility="{Binding TopExpanderVisibility}" Expanded="ExpanderTop_OnExpanded"
+                  Collapsed="ExpanderTop_OnCollapsed"
+
+                  Width="{Binding ElementName=grid, Path=ActualWidth}"
+                  IsExpanded="True" BorderBrush="DimGray" BorderThickness="1,1,1,1" ExpandDirection="Down">
+
+            <b:Interaction.Behaviors>
+                <classes:GridRowHeightReseterBehaviour TargetGridRowIndex="0" />
+            </b:Interaction.Behaviors>
+
+            <TabControl>
+                <TabItem Header="Best strategies" Background="#FFF3F3F3">
+                    <Grid Margin="0" HorizontalAlignment="Stretch">
+                        <controls:CustomizationListView x:Name="listView" Grid.Column="0" Grid.Row="0"
+                                                        GridColumnCustomization="{Binding StrategiesColumnCustomization}"
+                                                        IsEnabled="{Binding ApplyRiskLevels, Converter={StaticResource boolNegateConverter}}"
+                                                        ItemsSource="{Binding StrategiesView, NotifyOnValidationError=False}"
+                                                        SelectedItem="{Binding SelectedStrategy}">
+
+                            <ListView.Resources>
+                                <LinearGradientBrush x:Key="GridViewColumnHeaderBorderBackground" EndPoint="0,1"
+                                                     StartPoint="0,0">
+                                    <GradientStop Color="#FFF2F2F2" Offset="0" />
+                                    <GradientStop Color="#FFD5D5D5" Offset="1" />
+                                </LinearGradientBrush>
+                                <LinearGradientBrush x:Key="GridViewColumnHeaderHoverBackground" EndPoint="0,1"
+                                                     StartPoint="0,0">
+                                    <GradientStop Color="#FFBDEDFF" Offset="0" />
+                                    <GradientStop Color="#FFB7E7FB" Offset="1" />
+                                </LinearGradientBrush>
+
+                                <Style x:Key="GridViewColumnHeaderGripper" TargetType="{x:Type Thumb}">
+                                    <Setter Property="Canvas.Right" Value="-9" />
+                                    <Setter Property="Width" Value="18" />
+                                    <Setter Property="Height"
+                                            Value="{Binding ActualHeight, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="Background"
+                                            Value="{StaticResource GridViewColumnHeaderBorderBackground}" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type Thumb}">
+                                                <Border Background="Transparent" Padding="{TemplateBinding Padding}">
+                                                    <Rectangle Fill="{TemplateBinding Background}"
+                                                               HorizontalAlignment="Center" Width="1" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+
+                                                <Grid SnapsToDevicePixels="True">
+                                                    <Border x:Name="HeaderBorder"
+                                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                                            BorderThickness="0,0,0,0"
+                                                            Background="{TemplateBinding Background}">
+                                                        <Grid>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition MaxHeight="7" />
+                                                                <RowDefinition />
+                                                            </Grid.RowDefinitions>
+
+                                                            <Border BorderThickness="0,1,1,1" BorderBrush="Black"
+                                                                    Padding="{TemplateBinding Padding}"
+                                                                    Grid.RowSpan="2"
+                                                                    Background="#FFF3F3F3">
+                                                                <TextBlock x:Name="HeaderContent"
+                                                                           Text="{TemplateBinding Content}"
+                                                                           TextWrapping="Wrap"
+                                                                           FontSize="10"
+                                                                           Padding="5,0,5,0" VerticalAlignment="Center"
+                                                                           Width="{TemplateBinding Width}"
+                                                                           TextAlignment="Center" />
+                                                            </Border>
+                                                        </Grid>
+                                                    </Border>
+                                                    <Canvas>
+                                                        <Thumb x:Name="PART_HeaderGripper"
+                                                               Style="{StaticResource GridViewColumnHeaderGripper}" />
+                                                    </Canvas>
+                                                </Grid>
+
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="true">
+                                                        <Setter Property="Background" TargetName="HeaderBorder"
+                                                                Value="{StaticResource GridViewColumnHeaderHoverBackground}" />
+                                                        <Setter Property="Background" TargetName="PART_HeaderGripper"
+                                                                Value="Transparent" />
+                                                    </Trigger>
+                                                    <Trigger Property="Height" Value="Auto">
+                                                        <Setter Property="MinHeight" Value="20" />
+                                                    </Trigger>
+                                                    <Trigger Property="IsEnabled" Value="false">
+                                                        <Setter Property="Foreground"
+                                                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="OverridesDefaultStyle" Value="True" />
+                                    <Setter Property="Foreground" Value="Black" />
+                                    <Setter Property="Height" Value="30" />
+                                    <Setter Property="FontSize" Value="12" />
+                                </Style>
+
+                            </ListView.Resources>
+                            <ListView.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Preset save"
+                                              Command="{Binding OptimizerPeriodPresetsSaveCommand}"
+                                              IsEnabled="{Binding IsPresetSaveEnable}" />
+                                    <MenuItem Header="Settings" Command="{Binding OptimizerPeriodSettingsCommand}" />
+                                    <MenuItem Header="Open in validator">
+                                        <MenuItem Header="IS" Command="{Binding OpenInValidatorISCommand}" />
+                                        <MenuItem Header="ISOS" Command="{Binding OpenInValidatorOSCommand}" />
+                                    </MenuItem>
+                                    <MenuItem Header="View parameter list" Command="{Binding ViewParameterListCommand}" />
+                                </ContextMenu>
+                            </ListView.ContextMenu>
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="ListViewItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListViewItem">
+                                                <Grid Margin="0" Background="Transparent">
+
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=Parameters }"
+                                                            Grid.Column="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=Parameters }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=Parameters }"
+                                                            Grid.Row="0"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            ToolTip="{Binding HintParameters}"
+                                                            Background="{TemplateBinding Background}"
+                                                            Content="{Binding Parameters}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=PerformanceValue }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=PerformanceValue }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=PerformanceValue }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding PerformanceValue, StringFormat=F0}" />
+                                                    </Border>
+
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=NetProfit }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=NetProfit }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=NetProfit }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding NetProfit, StringFormat=F0}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=CommissionValue }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=CommissionValue }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=CommissionValue }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding CommissionValue, StringFormat=F0}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=ProfitFactor }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=ProfitFactor }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=ProfitFactor }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding ProfitFactor}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=Sharpe }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=Sharpe }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=Sharpe }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding Sharpe, StringFormat=F2}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=EquityHighs }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=EquityHighs }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=EquityHighs }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding EquityHighs, StringFormat=F2}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=MaxDrawDown }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=MaxDrawDown }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=MaxDrawDown }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding MaxDrawDown, StringFormat=F0}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=MaxDrawDownDays }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=MaxDrawDownDays }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=MaxDrawDownDays }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding MaxDrawDownDays, StringFormat=F2}" />
+                                                    </Border>
+
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=StartDate }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=StartDate }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=StartDate }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding StartDate}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=EndDate }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=EndDate}"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=EndDate }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding EndDate}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=MaxConsLoss }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=MaxConsLoss }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=MaxConsLoss }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding MaxConsLoss, StringFormat=F0}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=MaxConsWins }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=MaxConsWins }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=MaxConsWins }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding MaxConsWins, StringFormat=F0}" />
+                                                    </Border>
+
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=Trades }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=Trades }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=Trades }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding Trades}" />
+                                                    </Border>
+
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=WinPercent }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=WinPercent }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=WinPercent }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding WinPercent}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=AverageTradesInYear }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=AverageTradesInYear }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=AverageTradesInYear }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding AverageTradesInYear}" />
+                                                    </Border>
+
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=AverageTradeDurationInDays }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=AverageTradeDurationInDays }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=AverageTradeDurationInDays }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding AverageTradeDurationInDays}" />
+                                                    </Border>
+
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=AverageTradeProfit }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=AverageTradeProfit }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=AverageTradeProfit }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding AverageTradeProfit}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=AverageWinningTrade }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=AverageWinningTrade }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=AverageWinningTrade }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding AverageWinningTrade}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=LargestWinningTrade }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=LargestWinningTrade }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=LargestWinningTrade }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding LargestWinningTrade}" />
+                                                    </Border>
+
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=AverageLoosingTrade }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=AverageLoosingTrade }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=AverageLoosingTrade }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding AverageLoosingTrade}" />
+                                                    </Border>
+
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=LargestLoosingTrade }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=LargestLoosingTrade }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=LargestLoosingTrade }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding LargestLoosingTrade}" />
+                                                    </Border>
+
+                                                    <Border BorderThickness="0,0,1,0"
+                                                            Grid.Row="0"
+                                                            Visibility="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToVisibilityConverter}, ConverterParameter=CustomValue }"
+                                                            Grid.Column="{Binding DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToIndexConverter}, ConverterParameter=CustomValue }"
+                                                            Width="{Binding  DataContext.StrategiesColumnCustomization.Columns, ElementName=listView, Converter={StaticResource columnToWidthConverter}, ConverterParameter=CustomValue }"
+                                                            BorderBrush="Gray">
+                                                        <Label
+                                                            Style="{StaticResource itemViewStyle}"
+                                                            FontSize="12"
+                                                            Padding="5,0,5,0"
+                                                            Background="{TemplateBinding Background}"
+                                                            HorizontalContentAlignment="Right"
+                                                            Content="{Binding CustomValue}"
+                                                            ContentStringFormat="0.00" />
+                                                    </Border>
+
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                    <Setter Property="Margin" Value="2,0" />
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="Height"
+                                            Value="21" />
+                                    <Style.Triggers>
+                                        <MultiTrigger>
+                                            <MultiTrigger.Conditions>
+                                                <Condition Property="IsSelected" Value="true" />
+                                            </MultiTrigger.Conditions>
+                                            <Setter Property="Background" Value="LightGray" />
+                                        </MultiTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+
+                            <ListView.View>
+                                <GridView AllowsColumnReorder="True" />
+                            </ListView.View>
+
+                        </controls:CustomizationListView>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Info" Background="#FFF3F3F3">
+                    <Grid Margin="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="140" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                            <RowDefinition Height="30" />
+                        </Grid.RowDefinitions>
+                        <Label Content="All strategies checked:" Grid.Column="0" Grid.Row="0" />
+                        <Label Content="{Binding AllStrategies}" Grid.Column="1" Grid.Row="0" FontWeight="Medium" />
+
+                        <Label Content="Removed by min trades:" Grid.Column="0" Grid.Row="1" />
+                        <Label Content="{Binding RemovedStrategiesByMinTrades}" Grid.Column="1" Grid.Row="1"
+                               FontWeight="Medium" />
+
+                        <Label Content="Removed by draw down:" Grid.Column="0" Grid.Row="2" />
+                        <Label Content="{Binding RemovedStrategiesByDrawDown}" Grid.Column="1" Grid.Row="2"
+                               FontWeight="Medium" />
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Matrix" Background="#FFF3F3F3">
+                    <Grid Margin="0" HorizontalAlignment="Stretch">
+                        <ListView x:Name="matrixView" Grid.Column="0" Grid.Row="0"
+                                  ItemsSource="{Binding MatrixView, NotifyOnValidationError=False}">
+
+                            <ListView.Resources>
+
+                                <Style x:Key="headerLabel" TargetType="Label">
+                                    <Setter Property="BorderBrush" Value="Gray" />
+                                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                                    <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                    <Setter Property="Background" Value="Transparent" />
+                                    <Setter Property="Padding" Value="0" />
+                                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    <Setter Property="Content" Value="{Binding}" />
+
+                                </Style>
+
+                                <DataTemplate x:Key="headerTemplateValue">
+                                    <Grid Background="#FFF3F3F3" Height="30"
+                                          Width="100">
+                                        <Label BorderThickness="0,0,1,1" Padding="5,0,0,0"  HorizontalContentAlignment="Center"  Style="{StaticResource headerLabel}" />
+                                    </Grid>
+                                </DataTemplate>
+
+
+                                <DataTemplate x:Key="headerTemplateName">
+                                    <Grid Background="#FFF3F3F3" Height="30"
+                                          Width="150">
+                                        <Label BorderThickness="0,0,1,1" Padding="5,0,0,0" Style="{StaticResource headerLabel}" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.Resources>
+                                    <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="ListViewItem">
+                                                    <Grid Margin="0" Background="Transparent">
+                                                        <Grid.Resources>
+                                                            <Style x:Key="itemViewStyle1" TargetType="{x:Type Label}"
+                                                                   BasedOn="{StaticResource itemViewStyle}">
+                                                                <Setter Property="Foreground" Value="Black" />
+                                                                <Setter Property="BorderBrush" Value="Gray" />
+                                                                <Setter Property="Padding" Value="5,0" />
+                                                                <Setter Property="FontSize" Value="12" />
+                                                                <Setter Property="HorizontalContentAlignment"
+                                                                        Value="Right" />
+                                                            </Style>
+
+                                                            <Style x:Key="itemViewStyle2" TargetType="{x:Type Border}">
+                                                                <Setter Property="BorderBrush" Value="Gray" />
+                                                                <Setter Property="BorderThickness" Value="0,0,1,0" />
+
+                                                                <Setter Property="Width" Value="100" />
+                                                            </Style>
+                                                        </Grid.Resources>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="0"
+                                                                Width="150">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                HorizontalContentAlignment="Left"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Name}" />
+                                                        </Border>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="1"
+                                                                Visibility="{Binding Visibilities[0]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[0]}" />
+                                                        </Border>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="2"
+                                                                Visibility="{Binding Visibilities[1]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[1]}" />
+                                                        </Border>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="3"
+                                                                Visibility="{Binding Visibilities[2]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[2]}" />
+                                                        </Border>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="4"
+                                                                Visibility="{Binding Visibilities[3]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[3]}" />
+                                                        </Border>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="5"
+                                                                Visibility="{Binding Visibilities[4]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[4]}" />
+                                                        </Border>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="6"
+                                                                Visibility="{Binding Visibilities[5]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[5]}" />
+                                                        </Border>
+
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="7"
+                                                                Visibility="{Binding Visibilities[6]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[6]}" />
+                                                        </Border>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="8"
+                                                                Visibility="{Binding Visibilities[7]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[7]}" />
+                                                        </Border>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="9"
+                                                                Visibility="{Binding Visibilities[8]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[8]}" />
+                                                        </Border>
+
+                                                        <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="10"
+                                                                Visibility="{Binding Visibilities[9]}">
+                                                            <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[9]}" />
+                                                        </Border>
+
+
+
+
+
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="11"
+                                                                Visibility="{Binding Visibilities[10]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[10]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="12"
+                                                                Visibility="{Binding Visibilities[11]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[11]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="13"
+                                                                Visibility="{Binding Visibilities[12]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[12]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="14"
+                                                                Visibility="{Binding Visibilities[13]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[13]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="15"
+                                                                Visibility="{Binding Visibilities[14]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[14]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="16"
+                                                                Visibility="{Binding Visibilities[15]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[15]}" />
+                                                    </Border>
+
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="17"
+                                                                Visibility="{Binding Visibilities[16]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[16]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="18"
+                                                                Visibility="{Binding Visibilities[17]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[17]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="19"
+                                                                Visibility="{Binding Visibilities[18]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[18]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="20"
+                                                                Visibility="{Binding Visibilities[19]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[19]}" />
+                                                    </Border>
+
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="21"
+                                                                Visibility="{Binding Visibilities[20]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[20]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="22"
+                                                                Visibility="{Binding Visibilities[21]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[21]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="23"
+                                                                Visibility="{Binding Visibilities[22]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[22]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="24"
+                                                                Visibility="{Binding Visibilities[23]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[23]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="25"
+                                                                Visibility="{Binding Visibilities[24]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[24]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="26"
+                                                                Visibility="{Binding Visibilities[25]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[25]}" />
+                                                    </Border>
+
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="27"
+                                                                Visibility="{Binding Visibilities[26]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[26]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="28"
+                                                                Visibility="{Binding Visibilities[27]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[27]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="29"
+                                                                Visibility="{Binding Visibilities[28]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[28]}" />
+                                                    </Border>
+
+                                                    <Border Style="{StaticResource itemViewStyle2}"
+                                                                Grid.Column="30"
+                                                                Visibility="{Binding Visibilities[29]}">
+                                                        <Label
+                                                                Style="{StaticResource itemViewStyle1}"
+                                                                Background="{TemplateBinding Background}"
+                                                                Content="{Binding Values[29]}" />
+                                                    </Border>
+
+
+                                                </Grid>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="Margin" Value="2,0" />
+                                        <Setter Property="Padding" Value="0" />
+                                        <Setter Property="Height"
+                                                Value="21" />
+                                        <Style.Triggers>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsSelected" Value="true" />
+                                                </MultiTrigger.Conditions>
+                                                <Setter Property="Background" Value="LightGray" />
+                                            </MultiTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+
+
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="{DynamicResource lName}"
+                                                    Width="150"
+                                                    HeaderTemplate="{StaticResource headerTemplateName}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[0]}"
+                                                    Width="{Binding ColumnConfig.Widths[0]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[1]}"
+                                                    Width="{Binding ColumnConfig.Widths[1]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[2]}"
+                                                    Width="{Binding ColumnConfig.Widths[2]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[3]}"
+                                                    Width="{Binding ColumnConfig.Widths[3]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[4]}"
+                                                    Width="{Binding ColumnConfig.Widths[4]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[5]}"
+                                                    Width="{Binding ColumnConfig.Widths[5]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[6]}"
+                                                    Width="{Binding ColumnConfig.Widths[6]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[7]}"
+                                                    Width="{Binding ColumnConfig.Widths[7]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[8]}"
+                                                    Width="{Binding ColumnConfig.Widths[8]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[9]}"
+                                                    Width="{Binding ColumnConfig.Widths[9]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[10]}"
+                                                    Width="{Binding ColumnConfig.Widths[10]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[11]}"
+                                                    Width="{Binding ColumnConfig.Widths[11]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[12]}"
+                                                    Width="{Binding ColumnConfig.Widths[12]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[13]}"
+                                                    Width="{Binding ColumnConfig.Widths[13]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[14]}"
+                                                    Width="{Binding ColumnConfig.Widths[14]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[15]}"
+                                                    Width="{Binding ColumnConfig.Widths[15]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[16]}"
+                                                    Width="{Binding ColumnConfig.Widths[16]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[17]}"
+                                                    Width="{Binding ColumnConfig.Widths[17]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[18]}"
+                                                    Width="{Binding ColumnConfig.Widths[18]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[19]}"
+                                                    Width="{Binding ColumnConfig.Widths[19]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[20]}"
+                                                    Width="{Binding ColumnConfig.Widths[20]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[21]}"
+                                                    Width="{Binding ColumnConfig.Widths[21]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[22]}"
+                                                    Width="{Binding ColumnConfig.Widths[22]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[23]}"
+                                                    Width="{Binding ColumnConfig.Widths[23]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[24]}"
+                                                    Width="{Binding ColumnConfig.Widths[24]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[25]}"
+                                                    Width="{Binding ColumnConfig.Widths[25]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[26]}"
+                                                    Width="{Binding ColumnConfig.Widths[26]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[27]}"
+                                                    Width="{Binding ColumnConfig.Widths[27]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[28]}"
+                                                    Width="{Binding ColumnConfig.Widths[28]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+                                    <GridViewColumn Header="{Binding ColumnConfig.Headers[29]}"
+                                                    Width="{Binding ColumnConfig.Widths[29]}"
+                                                    HeaderTemplate="{StaticResource headerTemplateValue}" />
+
+
+                                </GridView>
+                            </ListView.View>
+
+                        </ListView>
+
+                    </Grid>
+                </TabItem>
+            </TabControl>
+        </Expander>
+
+        <!--<Label Grid.Row="0" Content="Best 10 strategies" FontSize="14"  Margin="20,0" Height="30" VerticalAlignment="Top" VerticalContentAlignment="Top"/>-->
+
+
+        <GridSplitter Grid.Row="1"
+                      Width="Auto"
+                      ResizeBehavior="PreviousAndNext"
+                      Name="topSplitter"
+                      ResizeDirection="Rows"
+                      HorizontalAlignment="Stretch"
+                      Height="5" />
+
+
+        <TabControl Grid.Row="2" SelectedIndex="{Binding SelectedTabIndex, Mode=TwoWay}" >
+
+            <TabItem Header="IS" Background="#FFF3F3F3">
+                <performance:StrategyPerformanceView DataContext="{Binding IsPerformance}"
+                                                     HorizontalAlignment="Stretch" />
+            </TabItem>
+
+            <TabItem Header="OS" Background="#FFF3F3F3" Visibility="{Binding IsLive, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=negate}">
+                <performance:StrategyPerformanceView DataContext="{Binding OsPerformance}"
+                                                     HorizontalAlignment="Stretch" />
+            </TabItem>
+
+            <TabItem Header="HSim" Background="#FFF3F3F3" Visibility="{Binding SimPerformanceVisibility}">
+                <performance:StrategyPerformanceView DataContext="{Binding SimPerformance}"
+                                                     HorizontalAlignment="Stretch" />
+            </TabItem>
+
+
+            <TabItem Header="Total" Background="#FFF3F3F3" Visibility="{Binding IsLive, Converter={StaticResource boolToVisibilityConverter}, ConverterParameter=negate}">
+                <performance:StrategyPerformanceView DataContext="{Binding TotalPerformance}"
+                                                     HorizontalAlignment="Stretch" />
+            </TabItem>
+
+            
+
+        </TabControl>
+
+        <controls1:LoadingPanel x:Name="loadingPanel" Grid.Row="2"
+                               IsLoading="{Binding IsBusy, Mode=OneWay}"
+                               Message="{Binding Message}"
+                               SubMessage="{Binding SubMessage}" />
+
+    </Grid>
+</UserControl>

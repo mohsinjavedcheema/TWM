@@ -1,0 +1,771 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <Import Project="..\Directory.Build.props" />
+  <PropertyGroup>
+    <ApplicationIcon>Assets/favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F1286889-0C09-4B87-874A-B1AEF1CCFFA0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>Twm</RootNamespace>
+    <AssemblyName>Twm</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>false</Deterministic>
+    <XamlDebuggingInformation>True</XamlDebuggingInformation>
+    <AutoGenerateBindingRedirects>false</AutoGenerateBindingRedirects>
+    <GenerateBndingRedirectsOutputType>false</GenerateBndingRedirectsOutputType>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ObfuscatedRelease|AnyCPU'">
+    <OutputPath>bin\ObfuscatedRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ObfuscatedRelease|x86'">
+    <OutputPath>bin\x86\ObfuscatedRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Engine" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Classes\GridRowHeightReseterBehaviour.cs" />
+    <Compile Include="Classes\GridColumnWidthReseterBehaviour.cs" />
+    <Compile Include="Classes\GridViewSort.cs" />
+    <Compile Include="Classes\VisualHelper.cs" />
+    <Compile Include="Controls\CircularProgressBar.xaml.cs">
+      <DependentUpon>CircularProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\CustomProgressBar.xaml.cs">
+      <DependentUpon>CustomProgressBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\LoadingPanel.xaml.cs">
+      <DependentUpon>LoadingPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ExceptionInfo.cs" />
+    <Compile Include="Extensions\PasswordBoxHelper.cs" />
+    <Compile Include="Extensions\PropertyGridExt.cs" />
+    <Compile Include="Extensions\TypeUtilities.cs" />
+    <Compile Include="Interfaces\IDomViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\Accounts\AccountsViewModel.cs" />
+    <Compile Include="ViewModels\Accounts\AccountViewModel.cs" />
+    <Compile Include="ViewModels\Charts\DomViewModel.cs" />
+    <Compile Include="ViewModels\Charts\DrawingToolsViewModel.cs" />
+    <Compile Include="ViewModels\Charts\ChartTraderViewModel.cs" />
+    <Compile Include="ViewModels\Charts\PriceLevelViewModel.cs" />
+    <Compile Include="ViewModels\Charts\PricesViewModel.cs" />
+    <Compile Include="ViewModels\Charts\TimeAndSaleViewModel.cs" />
+    <Compile Include="ViewModels\Charts\DataBoxViewModel.cs" />
+    <Compile Include="ViewModels\DataBase\DatabaseViewModel.cs" />
+    <Compile Include="ViewModels\DataBase\OptimizerResultsViewModel.cs" />
+    <Compile Include="ViewModels\DataBase\OptimizerResultViewModel.cs" />
+    <Compile Include="ViewModels\Help\AboutViewModel.cs" />
+    <Compile Include="ViewModels\Instruments\InstrumentMapViewModel.cs" />
+    <Compile Include="ViewModels\Instruments\InstrumentsMapViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrderViewModel.cs" />
+    <Compile Include="ViewModels\Orders\OrdersViewModel.cs" />
+    <Compile Include="ViewModels\Assets\AssetsViewModel.cs" />
+    <Compile Include="ViewModels\Assets\AssetViewModel.cs" />
+    <Compile Include="ViewModels\Positions\PositionsViewModel.cs" />
+    <Compile Include="ViewModels\Positions\PositionViewModel.cs" />
+    <Compile Include="ViewModels\Presets\InstrumentListPreset.cs" />
+    <Compile Include="ViewModels\Presets\InstrumentPreset.cs" />
+    <Compile Include="ViewModels\Presets\OptimizerStrategyPreset.cs" />
+    <Compile Include="ViewModels\Presets\ValidatorStrategyPreset.cs" />
+    <Compile Include="ViewModels\Strategies\Optimizer\OptimizerPeriodEditViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Optimizer\OptimizerPeriodsEditViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Optimizer\OptimizerViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Optimizer\OptimizerPeriodViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Optimizer\OptimizerTestViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Optimizer\ParameterValuesViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Optimizer\TaskViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\AnalysisParameters.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\AnalysisViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\BaseGraphViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\Graphs\DrawDownGraph.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\Graphs\DrawDownCompareGraph.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\Graphs\EquityPortfolioCompareGraph.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\Graphs\EquityPortfolioGraph.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\Graphs\EquityGraph.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\Models\PortfolioTradeInfo.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\Models\DrawDownInfo.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\Models\TradeInfo.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\Analysis\ViewResolvingPlotModel.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\PainLevels\PainLevelsViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\PainLevels\PeriodPainLevelViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\PainLevels\PainLevelViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Performance\PainLevels\SimSummaryItemViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\StrategyPerformanceViewModel.cs" />
+    <Compile Include="ViewModels\Connections\ConfigureConnectionViewModel.cs" />
+    <Compile Include="ViewModels\Instruments\InstrumentListsViewModel.cs" />
+    <Compile Include="ViewModels\Instruments\InstrumentsViewModel.cs" />
+    <Compile Include="ViewModels\Options\Groups\GeneralProjectViewModel.cs" />
+    <Compile Include="ViewModels\Options\GroupViewModel.cs" />
+    <Compile Include="ViewModels\Options\CategoryViewModel.cs" />
+    <Compile Include="ViewModels\Options\SystemOptionsViewModel.cs" />
+    <Compile Include="ViewModels\ScriptObjects\SelectScriptObjectViewModel.cs" />
+    <Compile Include="ViewModels\Options\SystemOptionViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\StrategiesViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\StrategyViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Optimizer\IOptimizerItem.cs" />
+    <Compile Include="ViewModels\Strategies\Validator\ValidatorItemViewModel.cs" />
+    <Compile Include="ViewModels\Strategies\Validator\ValidatorViewModel.cs" />
+    <Compile Include="Views\Accounts\AccountsView.xaml.cs">
+      <DependentUpon>AccountsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Chart\DomView.xaml.cs">
+      <DependentUpon>DomView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Chart\DrawingToolsView.xaml.cs">
+      <DependentUpon>DrawingToolsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Chart\ChartTraderView.xaml.cs">
+      <DependentUpon>ChartTraderView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Chart\ChartView.xaml.cs">
+      <DependentUpon>ChartView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Instruments\ChartParamView.xaml.cs">
+      <DependentUpon>ChartParamView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Instruments\InstrumentMapView.xaml.cs">
+      <DependentUpon>InstrumentMapView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Instruments\InstrumentListView.xaml.cs">
+      <DependentUpon>InstrumentListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Instruments\InstrumentsView.xaml.cs">
+      <DependentUpon>InstrumentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\LogView.xaml.cs">
+      <DependentUpon>LogView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Database\OptimizerResultsView.xaml.cs">
+      <DependentUpon>OptimizerResultsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\GeneralHistoricalDataView.xaml.cs">
+      <DependentUpon>GeneralHistoricalDataView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\GeneralServerApiView.xaml.cs">
+      <DependentUpon>GeneralServerApiView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\GeneralEmailView.xaml.cs">
+      <DependentUpon>GeneralEmailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\GeneralPreferencesView.xaml.cs">
+      <DependentUpon>GeneralPreferencesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\GeneralDisplayView.xaml.cs">
+      <DependentUpon>GeneralDisplayView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\CalculationOptimizerView.xaml.cs">
+      <DependentUpon>CalculationOptimizerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Options\GeneralProjectView.xaml.cs">
+      <DependentUpon>GeneralProjectView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Orders\OrdersView.xaml.cs">
+      <DependentUpon>OrdersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Assets\AssetsView.xaml.cs">
+      <DependentUpon>AssetsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Positions\PositionsView.xaml.cs">
+      <DependentUpon>PositionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Optimizer\OptimizerPeriodControl.xaml.cs">
+      <DependentUpon>OptimizerPeriodControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Optimizer\OptimizerTestView.xaml.cs">
+      <DependentUpon>OptimizerTestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Optimizer\OptimizerPeriodView.xaml.cs">
+      <DependentUpon>OptimizerPeriodView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Optimizer\ParameterValues.xaml.cs">
+      <DependentUpon>ParameterValues.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Performance\StrategyPerformanceView.xaml.cs">
+      <DependentUpon>StrategyPerformanceView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Performance\PainLevelView.xaml.cs">
+      <DependentUpon>PainLevelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Performance\SummaryView.xaml.cs">
+      <DependentUpon>SummaryView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Performance\OrdersView.xaml.cs">
+      <DependentUpon>OrdersView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Performance\AnalysisView.xaml.cs">
+      <DependentUpon>AnalysisView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\Performance\TradesView.xaml.cs">
+      <DependentUpon>TradesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Strategies\StrategiesView.xaml.cs">
+      <DependentUpon>StrategiesView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Charts\ChartParamsWindow.xaml.cs">
+      <DependentUpon>ChartParamsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Charts\OrderBookWindow.xaml.cs">
+      <DependentUpon>OrderBookWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Charts\ChartWindow.xaml.cs">
+      <DependentUpon>ChartWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Charts\TimeAndSaleWindow.xaml.cs">
+      <DependentUpon>TimeAndSaleWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Charts\DataBoxWindow.xaml.cs">
+      <DependentUpon>DataBoxWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Database\DatabaseWindow.xaml.cs">
+      <DependentUpon>DatabaseWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Help\AboutWindow.xaml.cs">
+      <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SplashScreenWindow.xaml.cs">
+      <DependentUpon>SplashScreenWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DebugWindow.xaml.cs">
+      <DependentUpon>DebugWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Connections\ConnectionWindow.xaml.cs">
+      <DependentUpon>ConnectionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\StrategyParamListWindow.xaml.cs">
+      <DependentUpon>StrategyParamListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\OptimizerErrorWindow.xaml.cs">
+      <DependentUpon>OptimizerErrorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\OptimizerPeriodsEditWindow.xaml.cs">
+      <DependentUpon>OptimizerPeriodsEditWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\OptimizerPeriodWindow.xaml.cs">
+      <DependentUpon>OptimizerPeriodWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\OptimizerTestWindow.xaml.cs">
+      <DependentUpon>OptimizerTestWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\PortfolioWindow.xaml.cs">
+      <DependentUpon>PortfolioWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\StrategySelectWindow.xaml.cs">
+      <DependentUpon>StrategySelectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\OptimizerWindow.xaml.cs">
+      <DependentUpon>OptimizerWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\ValidatorWindow.xaml.cs">
+      <DependentUpon>ValidatorWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Strategies\StrategyPerformanceWindow.xaml.cs">
+      <DependentUpon>StrategyPerformanceWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Tools\InstrumentListsWindow.xaml.cs">
+      <DependentUpon>InstrumentListsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Tools\InstrumentListWindow.xaml.cs">
+      <DependentUpon>InstrumentListWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Tools\InstrumentsMapWindow.xaml.cs">
+      <DependentUpon>InstrumentsMapWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Tools\InstrumentsWindow.xaml.cs">
+      <DependentUpon>InstrumentsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\SelectScriptObjectWindow.xaml.cs">
+      <DependentUpon>SelectScriptObjectWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Tools\SystemOptionsWindow.xaml.cs">
+      <DependentUpon>SystemOptionsWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Controls\CircularProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\CustomProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\LoadingPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\lang.en-US.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\lang.ru-RU.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Accounts\AccountsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Chart\DomView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Chart\DrawingToolsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Chart\ChartTraderView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Chart\ChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Instruments\ChartParamView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Instruments\InstrumentMapView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Instruments\InstrumentListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Instruments\InstrumentsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\LogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Database\OptimizerResultsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\GeneralHistoricalDataView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Options\GeneralServerApiView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Options\GeneralEmailView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Options\GeneralPreferencesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Options\GeneralDisplayView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Options\CalculationOptimizerView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Options\GeneralProjectView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Orders\OrdersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Assets\AssetsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Positions\PositionsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Strategies\Optimizer\OptimizerPeriodControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Strategies\Optimizer\OptimizerTestView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Strategies\Optimizer\OptimizerPeriodView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Strategies\Optimizer\ParameterValues.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Strategies\Performance\StrategyPerformanceView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Strategies\Performance\PainLevelView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Strategies\Performance\SummaryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Strategies\Performance\OrdersView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Strategies\Performance\AnalysisView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Strategies\Performance\TradesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Strategies\StrategiesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Charts\ChartParamsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Charts\OrderBookWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Charts\ChartWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Charts\TimeAndSaleWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Charts\DataBoxWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Database\DatabaseWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Help\AboutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\SplashScreenWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\DebugWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Strategies\StrategyParamListWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Strategies\OptimizerErrorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Strategies\OptimizerPeriodsEditWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Strategies\OptimizerPeriodWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Strategies\OptimizerTestWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Strategies\PortfolioWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Strategies\StrategySelectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Strategies\OptimizerWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Strategies\ValidatorWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Strategies\StrategyPerformanceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Tools\InstrumentListsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Tools\InstrumentListWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="ViewModels\Charts\ChartViewModel.cs" />
+    <Compile Include="ViewModels\NavigationViewModel.cs" />
+    <Compile Include="Windows\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Windows\Connections\ConnectionWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Tools\InstrumentsMapWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\Tools\InstrumentsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\SelectScriptObjectWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Windows\Tools\SystemOptionsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Resource Include="Assets\Images\dxFeedLogoBlackTheme %281%29.png" />
+    <Content Include="Dark.thm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\indicatorIcon.png" />
+    <Resource Include="Images\strategyIcon.png" />
+    <Resource Include="Images\compileIcon.png" />
+    <Resource Include="Images\Valid.png" />
+    <Resource Include="Images\Invalid.png" />
+    <Resource Include="Images\SplashScreen.png" />
+    <Resource Include="Images\ArrowDown.png" />
+    <Resource Include="Images\ArrowUp.png" />
+    <Resource Include="Images\Pause.png" />
+    <Resource Include="Images\Play.png" />
+    <Resource Include="Images\Order.png" />
+    <Resource Include="Images\Trades.png" />
+    <Resource Include="Images\Orders.png" />
+    <Resource Include="Images\TS.png" />
+    <Resource Include="Images\ChartTrader.png" />
+    <Resource Include="Images\drawing_tools.png" />
+    <Resource Include="Images\h_line.png" />
+    <Resource Include="Images\Ray.png" />
+    <Resource Include="Images\v_line.png" />
+    <Resource Include="Images\rectangle.png" />
+    <Resource Include="Images\ruler.png" />
+    <Resource Include="Images\slash.png" />
+    <Content Include="Light.thm">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="confuserEx\confuser.crproj" />
+    <None Include="confuserEx\confuserps.ps1" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CsvHelper">
+      <Version>26.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Extended.Wpf.Toolkit">
+      <Version>4.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore">
+      <Version>2.1.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
+      <Version>1.1.31</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="OxyPlot.Wpf">
+      <Version>2.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="SQLitePCLRaw.bundle_green">
+      <Version>1.1.11</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Twm.Chart\Twm.Chart.csproj">
+      <Project>{bdaef42d-862c-475c-94c0-c3f47f5f5baa}</Project>
+      <Name>Twm.Chart</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Twm.Core\Twm.Core.csproj">
+      <Project>{fb7427f5-cf58-4216-be43-81d61f2e05b9}</Project>
+      <Name>Twm.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Twm.DB\Twm.DB.csproj">
+      <Project>{2d275cc5-09fd-402f-9616-13de564c8723}</Project>
+      <Name>Twm.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Twm.Model\Twm.Model.csproj">
+      <Project>{4034acf0-06a7-418d-8e2c-93223815ab00}</Project>
+      <Name>Twm.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Data\ES 06-21.Last.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Assets\Images\New-logo-vertical-oranje.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Images\FolderClose.png" />
+    <Resource Include="Images\FolderOpen.png" />
+    <Resource Include="Images\Trend.png" />
+    <Content Include="Sounds\CompiledSuccessfully.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Sounds\Connected.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\GreenCircle.png" />
+    <Resource Include="Images\RedCircle.png" />
+    <Resource Include="Images\WhiteCircle.png" />
+    <Resource Include="Images\YellowCircle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Views\Strategies\Performance\Legend\" />
+    <Folder Include="Views\Strategies\Performance\ToolTips\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Target Name="AfterCompile">
+    <Exec Command="if &quot;$(PlatformName)&quot; == &quot;AnyCPU&quot; (if &quot;$(ConfigurationName)&quot; == &quot;ObfuscatedRelease&quot; (powershell.exe  -ExecutionPolicy Bypass -File  &quot;$(ProjectDir)confuserEx\confuserps.ps1&quot; &quot;'$(SolutionDir)ConfuserEx\Confuser.CLI.exe'&quot; &quot;'$(ProjectDir)confuserEx\confuser.crproj'&quot; &quot;'$(ProjectDir)obj\$(ConfigurationName)\'&quot; &quot;'$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)'&quot; &quot;'$(SolutionDir)Twm.Chart\bin\$(ConfigurationName)\Twm.Chart.dll'&quot; &quot;'$(SolutionDir)Twm.Core\bin\$(ConfigurationName)\Twm.Core.dll'&quot; &quot;'$(SolutionDir)Twm.DB\bin\$(ConfigurationName)\Twm.DB.dll'&quot; &quot;'$(SolutionDir)Twm.Model\bin\$(ConfigurationName)\Twm.Model.dll'&quot; &quot;$(ProjectDir)bin\$(ConfigurationName)&quot; &quot;$(ProjectDir)bin\Release&quot;)&#xD;&#xA;) else (if &quot;$(ConfigurationName)&quot; == &quot;ObfuscatedRelease&quot; (powershell.exe  -ExecutionPolicy Bypass -File  &quot;$(ProjectDir)confuserEx\confuserps.ps1&quot; &quot;'$(SolutionDir)ConfuserEx\Confuser.CLI.exe'&quot; &quot;'$(ProjectDir)confuserEx\confuser.crproj'&quot; &quot;'$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)\'&quot; &quot;'$(ProjectDir)obj\$(PlatformName)\$(ConfigurationName)\$(TargetFileName)'&quot; &quot;'$(SolutionDir)Twm.Chart\bin\$(PlatformName)\$(ConfigurationName)\Twm.Chart.dll'&quot; &quot;'$(SolutionDir)Twm.Core\bin\$(PlatformName)\$(ConfigurationName)\Twm.Core.dll'&quot; &quot;'$(SolutionDir)Twm.DB\bin\$(PlatformName)\$(ConfigurationName)\Twm.DB.dll'&quot; &quot;'$(SolutionDir)Twm.Model\bin\$(PlatformName)\$(ConfigurationName)\Twm.Model.dll'&quot; &quot;$(ProjectDir)bin\$(PlatformName)\$(ConfigurationName)&quot;  &quot;$(ProjectDir)bin\$(PlatformName)\Release&quot;)&#xD;&#xA;)" />
+  </Target>
+</Project>

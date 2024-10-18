@@ -1,0 +1,171 @@
+﻿<UserControl x:Class="Twm.Views.Chart.ChartView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:Twm.Controls"
+             
+             xmlns:chsrtControls="clr-namespace:Twm.Chart.Controls;assembly=Twm.Chart"
+             xmlns:chart="clr-namespace:Twm.Views.Chart"
+             x:Name="UserControl"
+             ClipToBounds="True"
+
+             mc:Ignorable="d">
+    <Grid x:Name="chart">
+        <Grid.Resources>
+            <Style x:Key="toggleButtonStyle" TargetType="ToggleButton">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=Strategy}" Value="{x:Null}">
+                        <Setter Property="Background" Value="DarkGray" />
+                        <Setter Property="Opacity" Value="0.5" />
+                        <Setter Property="IsEnabled" Value="False" />
+                        <Setter Property="IsChecked" Value="False" />
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Path=Strategy.Enabled}" Value="False">
+                        <Setter Property="Background" Value="DarkGray" />
+                        <Setter Property="Opacity" Value="0.5" />
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Path=Strategy.Enabled}" Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                        <Setter Property="IsEnabled" Value="True" />
+                    </DataTrigger>
+
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="menuButtonStyle" TargetType="Button">
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Path=Strategy}" Value="{x:Null}">
+                        <Setter Property="Background" Value="DarkGray" />
+                        <Setter Property="Opacity" Value="0.5" />
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Path=Strategy.Enabled}" Value="False">
+                        <Setter Property="Background" Value="DarkGray" />
+                        <Setter Property="Opacity" Value="0.5" />
+                        <Setter Property="IsEnabled" Value="False" />
+                    </DataTrigger>
+
+                    <DataTrigger Binding="{Binding Path=Strategy.Enabled}" Value="True">
+                        <Setter Property="Opacity" Value="1" />
+                        <Setter Property="IsEnabled" Value="True" />
+                    </DataTrigger>
+
+                </Style.Triggers>
+            </Style>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <ToolBarPanel Grid.Row="0" ZIndex="10" Background="LightGray" ClipToBounds="True" Margin="0,0">
+
+            <ToolBar Background="LightGray" ToolBarTray.IsLocked="True" Margin="-5,0,-13,0" Padding="5,0,0,0">
+                <ToggleButton Command="{Binding DataBoxCommand}" ToolTip="Data box"
+                              IsChecked="{Binding Path=IsDataBoxVisible}">
+                    <Path Height="24" Width="24" Fill="Black"
+                          Data="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM7 10h2v7H7zm4-3h2v10h-2zm4 6h2v4h-2z" />
+                </ToggleButton>
+                <ToggleButton ToolTip="Cross line" Command="{Binding CrossLineCommand}"
+                              IsChecked="{Binding Path=Chart.IsCrossLinesVisible, Mode=OneWay}">
+                    <Path Height="24" Width="24" Fill="Black"
+                          Data="M22 11V9h-7V2h-2v7h-2V2H9v7H2v2h7v2H2v2h7v7h2v-7h2v7h2v-7h7v-2h-7v-2H22z M13 13h-2v-2h2V13z" />
+                </ToggleButton>
+
+                <ToggleButton Command="{Binding TimeAndSaleCommand}" ToolTip="Time And Sale"
+                              IsChecked="{Binding Path=IsTimeAndSaleVisible}">
+                    <Image Height="24" Width="24" Source="/Images/TS.png" />
+                </ToggleButton>
+                <Separator />
+
+                <ToggleButton Command="{Binding PerformanceCommand}" ToolTip="Perfomance"
+                              IsChecked="{Binding Path=Strategy.IsPerformanceVisible}"
+                              Visibility="{Binding PerformanceButtonVisibility}"
+                              Style="{StaticResource toggleButtonStyle}">
+                    <Image Width="24" Height="24" Source="/Twm;component/Images/Trend.png" />
+                </ToggleButton>
+
+                <Button Command="{Binding PerformanceLiveOrdersCommand}" ToolTip="Performance Live Orders"
+                        Style="{StaticResource menuButtonStyle}">
+                    <Image Height="24" Width="24" Source="/Images/Orders.png" />
+                </Button>
+
+                <Button Command="{Binding PerformanceLiveTradesCommand}" ToolTip="Performance Live Trades"
+                        Style="{StaticResource menuButtonStyle}">
+                    <Image Height="24" Width="24" Source="/Images/Trades.png" />
+                </Button>
+
+                <Separator />
+
+                <ToggleButton Command="{Binding ChartTraderCommand}" ToolTip="Chart trader"
+                              Visibility="{Binding ChartTraderButtonVisibility}"
+                              IsChecked="{Binding Path=IsChartTraderVisible}">
+                    <Image Width="24" Height="24" Source="/Twm;component/Images/ChartTrader.png" />
+                </ToggleButton>
+
+                <ToggleButton Command="{Binding DrawingToolsCommand}" ToolTip="Drawing Tools"                           
+                                IsChecked="{Binding Path=IsDrawingToolsVisible}"
+                            >
+                    <Image Width="24" Height="24" Source="/Twm;component/Images/drawing_tools.png" />
+                </ToggleButton>
+
+                <Button Command="{Binding Path=CompileProjectCommand}" ToolTip="Compile">
+                    <Image Height="24" Width="24" Source="/Images/compileIcon.png" />
+                </Button>
+
+                <Separator />
+
+                <Button Height="30" Width="30" ToolTip="Indicator" Command="{Binding Path=SelectIndicatorCommand}"
+                        Visibility="{Binding PerformanceButtonVisibility}">
+                    <Image Height="18" Width="18" Source="/Images/indicatorIcon.png" />
+                </Button>
+
+                <Button Height="30" Width="30" Command="{Binding Path=SelectStrategyCommand}" ToolTip="Strategy"
+                        Visibility="{Binding PerformanceButtonVisibility}">
+                    <Image Height="18" Width="18" Source="/Images/strategyIcon.png" />
+                </Button>
+            </ToolBar>
+        </ToolBarPanel>
+        <chsrtControls:ChartControl x:Name="chartControl" Grid.Row="1" Grid.Column="0" DataContext="{Binding Chart}"
+                                    Tag="{Binding ElementName=UserControl}">
+            <chsrtControls:ChartControl.ContextMenu>
+                <ContextMenu DataContext="{Binding Path=PlacementTarget.Tag, RelativeSource={RelativeSource Self}}"
+                             Tag="{Binding}" Opened="ChartMenu_OnOpened">
+                    <MenuItem Header="Data series..."
+                              Visibility="{Binding DataContext.PerformanceButtonVisibility}"
+                              Command="{Binding DataContext.ChangeParamsCommand}" />
+                    <MenuItem Header="Indicators..."
+                              Visibility="{Binding DataContext.PerformanceButtonVisibility}"
+                              Command="{Binding DataContext.SelectIndicatorCommand}" />
+                    <MenuItem Header="Strategies..."
+                              Visibility="{Binding DataContext.PerformanceButtonVisibility}"
+                              Command="{Binding DataContext.SelectStrategyCommand}" />
+                    <Separator />
+                    <MenuItem Header="Reload Script"
+                              Visibility="{Binding DataContext.PerformanceButtonVisibility}"
+                              Command="{Binding DataContext.ReloadScriptCommand}" />
+                </ContextMenu>
+            </chsrtControls:ChartControl.ContextMenu>
+        </chsrtControls:ChartControl>
+
+        <chart:ChartTraderView Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" DataContext="{Binding ChartTrader}"
+                               Visibility="{Binding ElementName=UserControl, Path=DataContext.ChartTraderVisibility}" />
+
+        <chart:DrawingToolsView Grid.Row="0" Grid.RowSpan="2" Grid.Column="1" DataContext="{Binding DrawingTools}"
+                       Visibility="{Binding ElementName=UserControl, Path=DataContext.DrawingToolsVisibility}" />
+
+        <controls:LoadingPanel x:Name="loadingPanel" Grid.Row="0" Grid.RowSpan="2"
+                               Grid.Column="0" Grid.ColumnSpan="2"
+                               IsLoading="{Binding IsBusy, Mode=OneWay}"
+                               Message="{Binding Message}"
+                               SubMessage="{Binding SubMessage}" />
+    </Grid>
+</UserControl>

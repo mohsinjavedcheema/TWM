@@ -1,0 +1,103 @@
+﻿<Window x:Class="Twm.Core.UI.Windows.PlaybackWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helpers="clr-namespace:Twm.Core.Helpers"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:converters="clr-namespace:Twm.Core.Converters"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Topmost="True"
+        
+
+        Title="Playback" Height="175" Width="400">
+    <Grid Background="WhiteSmoke">
+
+        <Grid.Resources>
+            <converters:BoolNegateConverter x:Key="boolNegateConverter" />
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="70" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Go to" Command="{Binding GoToDateCommand}" />
+            </ContextMenu>
+        </Grid.ContextMenu>
+                
+        <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="15,0,0,0"
+               Content="{Binding CurrentDate}"  FontWeight="DemiBold"
+               ContentStringFormat="dd.MM.yyyy HH.mm.ss"/>
+
+        <StackPanel Orientation="Horizontal" Margin="0,10" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1"
+                    HorizontalAlignment="Left">
+            <Label Margin="10,0" Content="Start " />
+
+            <DatePicker Height="25" helpers:DatePickerHelper.ShowTodayButton="True"
+                        helpers:DatePickerHelper.ShowTodayButtonContent="Today">
+                <DatePicker.SelectedDate>
+                    <Binding Path="PeriodStart" UpdateSourceTrigger="PropertyChanged" />
+                </DatePicker.SelectedDate>
+            </DatePicker>
+
+            <Label Margin="10,0" Content="End " />
+
+            <DatePicker Height="25" helpers:DatePickerHelper.ShowTodayButton="True"
+                        helpers:DatePickerHelper.ShowTodayButtonContent="Today">
+                <DatePicker.SelectedDate>
+                    <Binding Path="PeriodEnd" UpdateSourceTrigger="PropertyChanged" />
+                </DatePicker.SelectedDate>
+            </DatePicker>
+        </StackPanel>
+
+
+        <Button Height="32" Width="32" Grid.Row="2" Grid.Column="0" Command="{Binding PlayStopCommand}">
+            <Image Stretch="UniformToFill" Width="24" Height="24">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="Source" Value="/Twm;component/Images/Play.png" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsPlay}" Value="True">
+                                <Setter Property="Source" Value="/Twm;component/Images/Pause.png" />
+                            </DataTrigger>
+
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+        </Button>
+
+
+        <Slider VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="0,0,0,0"   PreviewMouseDown="SliderOnPreviewMouseDown"
+                PreviewMouseUp="SliderOnMouseUp" 
+                Minimum="{Binding PeriodStartTick}" Maximum="{Binding PeriodEndTick}" Value="{Binding CurrentTick}"  />
+
+        <StackPanel Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,0,0,0">
+            <Button Height="16" Width="16" Command="{Binding IncrementSpeedCommand}" IsEnabled="{Binding IsPlay, Converter={StaticResource boolNegateConverter}}">
+                <Image Stretch="UniformToFill" Width="12" Height="12" Source="/Twm;component/Images/ArrowUp.png"/>
+            </Button>
+            <Button Height="16" Width="16" Command="{Binding DecrementSpeedCommand}"  IsEnabled="{Binding IsPlay, Converter={StaticResource boolNegateConverter}}">
+                <Image Stretch="UniformToFill" Width="12" Height="12" Source="/Twm;component/Images/ArrowDown.png"/>
+            </Button>
+        </StackPanel>
+
+        <Label Grid.Row="2" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0"
+               Content="{Binding CurrentSpeed}"
+               ContentStringFormat=" {0}x"/>
+
+    </Grid>
+
+
+</Window>

@@ -1,0 +1,379 @@
+﻿<Window x:Class="Twm.Windows.SelectScriptObjectWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Twm.Windows"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:scriptObjects="clr-namespace:Twm.Core.ViewModels.ScriptObjects;assembly=Twm.Core"
+        xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:extensions="clr-namespace:Twm.Extensions"
+
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Icon="/Assets/favicon.ico"
+
+        Height="500" Width="600">
+    <Grid Background="#55D3D3D3">
+        <Grid.Resources>
+            <Style x:Key="TreeViewItemFocusVisual">
+                <Setter Property="Control.Template">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Rectangle />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ExpandCollapseToggleStyle" TargetType="{x:Type ToggleButton}">
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="Width" Value="30" />
+                <Setter Property="Height" Value="20" />
+
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ToggleButton}">
+                            <Image x:Name="image" Source="/Twm;component/Images/FolderClose.png" />
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsChecked" Value="true">
+                                    <Setter TargetName="image" Property="Source"
+                                            Value="/Twm;component/Images/FolderOpen.png" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <ControlTemplate TargetType="{x:Type TreeViewItem}" x:Key="folderTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition MinWidth="30" Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!-- created ItemRowGrid to contain both togglebutton and border -->
+                    <Grid x:Name="ItemRowGrid" Grid.ColumnSpan="3" Margin="1.5,0,0,0">
+                        <ToggleButton x:Name="Expander" ClickMode="Press"
+                                      IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Style="{StaticResource ExpandCollapseToggleStyle}" HorizontalAlignment="Left"
+                                      d:LayoutOverrides="Width, LeftMargin, RightMargin" />
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" Grid.Column="0"
+                                Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Margin="27.5,0,-17.5,0">
+                            <ContentPresenter x:Name="PART_Header" ContentSource="Header"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </Grid>
+                    <ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" />
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsExpanded" Value="false">
+                        <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed" />
+                    </Trigger>
+                    <Trigger Property="HasItems" Value="false">
+                        <Setter Property="Visibility" TargetName="Expander" Value="Collapsed" />
+                    </Trigger>
+                    <Trigger Property="IsSelected" Value="true">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        <!-- setting highlight target to created ItemRowGrid instead of border -->
+                        <Setter Property="Background" TargetName="ItemRowGrid"
+                                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsSelected" Value="true" />
+                            <Condition Property="IsSelectionActive" Value="false" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" TargetName="Bd"
+                                Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+                    </MultiTrigger>
+                    <Trigger Property="IsEnabled" Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <ControlTemplate TargetType="{x:Type TreeViewItem}" x:Key="objectTemplate">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition MinWidth="20" Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!-- created ItemRowGrid to contain both togglebutton and border -->
+                    <Grid x:Name="ItemRowGrid" Grid.ColumnSpan="3" Margin="1.5,0,0,0">
+                        <ToggleButton x:Name="Expander" ClickMode="Press"
+                                      IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Style="{StaticResource ExpandCollapseToggleStyle}" HorizontalAlignment="Left"
+                                      d:LayoutOverrides="Width, LeftMargin, RightMargin" />
+                        <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}" Grid.Column="0"
+                                Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true" Margin="0,0,-17.5,0">
+                            <ContentPresenter x:Name="PART_Header" ContentSource="Header"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                            <Border.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick"
+                                              Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.ConfigureObjectCommand}" />
+                            </Border.InputBindings>
+
+                        </Border>
+                    </Grid>
+                    <ItemsPresenter x:Name="ItemsHost" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" />
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsExpanded" Value="false">
+                        <Setter Property="Visibility" TargetName="ItemsHost" Value="Collapsed" />
+                    </Trigger>
+                    <Trigger Property="HasItems" Value="false">
+                        <Setter Property="Visibility" TargetName="Expander" Value="Collapsed" />
+                    </Trigger>
+                    <Trigger Property="IsSelected" Value="true">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        <!-- setting highlight target to created ItemRowGrid instead of border -->
+                        <Setter Property="Background" TargetName="ItemRowGrid"
+                                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                    </Trigger>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsSelected" Value="true" />
+                            <Condition Property="IsSelectionActive" Value="false" />
+                        </MultiTrigger.Conditions>
+                        <Setter Property="Background" TargetName="Bd"
+                                Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}}" />
+                    </MultiTrigger>
+                    <Trigger Property="IsEnabled" Value="false">
+                        <Setter Property="Foreground"
+                                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+
+            <Style x:Key="TreeViewItemStyle1" TargetType="{x:Type TreeViewItem}">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="HorizontalContentAlignment"
+                        Value="{Binding Path=HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                <Setter Property="VerticalContentAlignment"
+                        Value="{Binding Path=VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" />
+                <Setter Property="Padding" Value="0,0,0,0" />
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+                <Setter Property="FocusVisualStyle" Value="{StaticResource TreeViewItemFocusVisual}" />
+                <Style.Triggers>
+                    <Trigger Property="HasItems" Value="true">
+                        <Setter Property="Template" Value="{StaticResource folderTemplate}" />
+                    </Trigger>
+                    <Trigger Property="HasItems" Value="false">
+                        <Setter Property="Template" Value="{StaticResource objectTemplate}" />
+                    </Trigger>
+
+                </Style.Triggers>
+            </Style>
+
+        </Grid.Resources>
+
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="45*" />
+            <ColumnDefinition Width="55*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Label BorderThickness="0,1" BorderBrush="DimGray" FontSize="16" Content="{Binding AvailableObjectsHeader}"
+               Background="DarkGray" Padding="10,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"
+               Foreground="White" />
+
+        <TreeView x:Name="availableObjectsView" Grid.Column="0" Grid.Row="1" ItemsSource="{Binding AvailableObjects}"
+                  SelectedItemChanged="AvailableObjectsView_OnSelectedItemChanged">
+
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type scriptObjects:ScriptObjectItemViewModel }"
+                                          ItemsSource="{Binding Items}">
+                    <Grid HorizontalAlignment="Stretch" Margin="0,1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock VerticalAlignment="Center" FontSize="16"
+                                   Foreground="#FF676A66"
+                                   Text="{Binding Path=Name}" Grid.Column="1" />
+                    </Grid>
+                </HierarchicalDataTemplate>
+            </TreeView.Resources>
+
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}" BasedOn="{StaticResource TreeViewItemStyle1}">
+                    <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                    <Setter Property="FontWeight" Value="Normal" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Style.Resources>
+                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="LightGray" />
+                    </Style.Resources>
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="FontWeight" Value="Normal" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TreeView.ItemContainerStyle>
+        </TreeView>
+
+
+        <Label BorderThickness="0,1" BorderBrush="DimGray" Grid.Column="0" Grid.Row="2" FontSize="16"
+               Content="{Binding ConfiguredObjectsHeader}" Background="DarkGray" Padding="10,0"
+               HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Foreground="White" />
+
+        <ListView Grid.Column="0" Grid.Row="3" ItemsSource="{Binding ConfiguredObjects}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                  Loaded="FrameworkElement_OnLoaded"
+                  SelectedItem="{Binding SelectedObject}">
+            <ListView.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Presets">
+                        <MenuItem Header="Load" Command="{Binding StrategyPresetsLoadCommand}" />
+                        <MenuItem Header="Save" Command="{Binding StrategyPresetsSaveCommand}"
+                                  IsEnabled="{Binding IsStrategyPresetSaveEnable}" />
+                        <MenuItem Header="Export" Command="{Binding StrategyPresetsExportCommand}" />
+                    </MenuItem>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Grid Margin="0" Background="Transparent">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border BorderThickness="0,0,0,0"
+                                            BorderBrush="Gray">
+                                        <Label Style="{StaticResource itemViewStyle}"
+                                               Padding="5,0,0,0"
+                                               FontSize="16"
+                                               Background="{TemplateBinding Background}"
+                                               ToolTip="{Binding DisplayName}"
+                                               ToolTipService.InitialShowDelay="1000"
+                                               Content="{Binding DisplayName}" />
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Height" Value="25" />
+                    <Style.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="LightGray" />
+                        </MultiTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="4" Margin="2" HorizontalAlignment="Right">
+
+            <Button Width="50" Content="Add" Margin="0,0,5,0" Command="{Binding ConfigureObjectCommand}" />
+            <Button Width="50" Content="Remove" Margin="0,0,5,0" Command="{Binding RemoveObjectCommand}" />
+        </StackPanel>
+        <xctk:PropertyGrid x:Name="propertyGrid" Grid.Column="1" Grid.Row="0" Grid.RowSpan="5"
+                           PropertyValueChanged="PropertyGrid_OnPropertyValueChanged"
+                           FontSize="14" IsCategorized="True"
+                           ShowAdvancedOptions="False"
+                           extensions:PropertyGridExt.PropsVisibility="Strategies"
+                           ShowSearchBox="False" ShowTitle="False" ShowSortOptions="False"
+                           AutoGenerateProperties="True" SelectedObject="{Binding SelectedObject}">
+            <b:Interaction.Behaviors>
+                <extensions:PropsVisibilityBehavior />
+            </b:Interaction.Behaviors>
+
+
+            <xctk:PropertyGrid.AdvancedOptionsMenu>
+                <ContextMenu>
+                    <MenuItem Header="Presets">
+                        <MenuItem Header="Load" Click="LoadOnClick" />
+                        <MenuItem Header="Save" Click="SaveOnClick" />
+                        <MenuItem Header="Export" Click="ExportOnClick" />
+                    </MenuItem>
+                </ContextMenu>
+            </xctk:PropertyGrid.AdvancedOptionsMenu>
+
+            <xctk:PropertyGrid.EditorDefinitions>
+                <xctk:EditorTemplateDefinition TargetProperties="MoneyManagementTypes">
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Instance.MoneyManagementTypes}"
+                                      SelectedValue="{Binding Instance.MoneyManagementType}" />
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+
+                <xctk:EditorTemplateDefinition TargetProperties="CommissionTypes">
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Instance.CommissionTypes}"
+                                      SelectedValue="{Binding Instance.CommissionType}" />
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+
+                <xctk:EditorTemplateDefinition TargetProperties="Accounts">
+                    <xctk:EditorTemplateDefinition.EditingTemplate>
+                        <DataTemplate>
+                            <ComboBox ItemsSource="{Binding Instance.Accounts}"
+                                      SelectedValue="{Binding Instance.Account}" />
+                        </DataTemplate>
+                    </xctk:EditorTemplateDefinition.EditingTemplate>
+                </xctk:EditorTemplateDefinition>
+            </xctk:PropertyGrid.EditorDefinitions>
+
+        </xctk:PropertyGrid>
+
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="5" Margin="2"
+                    HorizontalAlignment="Right">
+
+            <Button FontSize="14" Width="75" Height="25" Content="OK" IsDefault="True" Margin="0,0,5,0"
+                    Click="ButtonBase_OnClick" />
+            <Button FontSize="14" Width="75" Height="25" Content="Apply" Margin="0,0,5,0"
+                    Command="{Binding Path=ApplyCommand}" />
+            <Button FontSize="14" Width="75" Height="25" Content="Cancel" Margin="0,0,5,0" IsCancel="True" />
+        </StackPanel>
+    </Grid>
+</Window>

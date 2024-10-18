@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BDAEF42D-862C-475C-94C0-C3F47F5F5BAA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Twm.Chart</RootNamespace>
+    <AssemblyName>Twm.Chart</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ObfuscatedRelease|AnyCPU'">
+    <OutputPath>bin\ObfuscatedRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Classes\Candle.cs" />
+    <Compile Include="Classes\OrderChangeEventArgs.cs" />
+    <Compile Include="Classes\RelayCommand.cs" />
+    <Compile Include="Converters\CandleChartConverters.cs" />
+    <Compile Include="Classes\CandleDrawingParameters.cs" />
+    <Compile Include="Classes\CandleExtremums.cs" />
+    <Compile Include="Classes\ICandleExtensionMethods.cs" />
+    <Compile Include="Classes\IntRange.cs" />
+    <Compile Include="Classes\MyDateAndTime.cs" />
+    <Compile Include="Classes\MyWpfMath.cs" />
+    <Compile Include="Classes\Plot.cs" />
+    <Compile Include="Classes\TimeTick.cs" />
+    <Compile Include="Converters\ObjectTypeToBooleanConverter.cs" />
+    <Compile Include="DoubleHelper.cs" />
+    <Compile Include="DrawingTools\Draw.cs" />
+    <Compile Include="DrawObjects\BaseDraw.cs" />
+    <Compile Include="DrawObjects\DrawInfo.cs" />
+    <Compile Include="DrawObjects\BaseLineDraw.cs" />
+    <Compile Include="DrawObjects\RiskDraw.cs" />
+    <Compile Include="DrawObjects\RulerDraw.cs" />
+    <Compile Include="DrawObjects\RayDraw.cs" />
+    <Compile Include="DrawObjects\OrderDraw.cs" />
+    <Compile Include="DrawObjects\PositionDraw.cs" />
+    <Compile Include="DrawObjects\ArrowDraw.cs" />
+    <Compile Include="DrawObjects\LineDraw.cs" />
+    <Compile Include="DrawObjects\RectDraw.cs" />
+    <Compile Include="DrawObjects\TextDraw.cs" />
+    <Compile Include="DrawObjects\TradeBarInfo.cs" />
+    <Compile Include="Converters\BoolArrayToVisibilityConverter.cs" />
+    <Compile Include="Elements\ChartPaneElement.cs" />
+    <Compile Include="Elements\ValueTicksElement.cs" />
+    <Compile Include="Elements\TimeTicksElement.cs" />
+    <Compile Include="Enums\ArrowConnector.cs" />
+    <Compile Include="Enums\ArrowDirection.cs" />
+    <Compile Include="Enums\DrawType.cs" />
+    <Compile Include="Enums\PlotChartType.cs" />
+    <Compile Include="Enums\PlotLineType.cs" />
+    <Compile Include="Interfaces\ICandle.cs" />
+    <Compile Include="Interfaces\ISeries.cs" />
+    <Compile Include="Interfaces\ISeriesValue.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Classes\Chart.cs" />
+    <Compile Include="Classes\Settings.cs" />
+    <Compile Include="Controls\ChartControl.xaml.cs">
+      <DependentUpon>ChartControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PaneControl.xaml.cs">
+      <DependentUpon>PaneControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Controls\ChartControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PaneControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\LogoWhite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\LogoBlack.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="copy.bat" />
+  </ItemGroup>
+   <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup> 
+
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(ProjectDir)copy.bat" $(TargetDir) $(SolutionDir)</PostBuildEvent>
+  </PropertyGroup>
+</Project>

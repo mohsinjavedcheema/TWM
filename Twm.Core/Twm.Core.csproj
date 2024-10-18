@@ -1,0 +1,884 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <ProjectGuid>{FB7427F5-CF58-4216-BE43-81D61F2E05B9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Twm.Core</RootNamespace>
+    <AssemblyName>Twm.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ObfuscatedRelease|AnyCPU'">
+    <OutputPath>bin\ObfuscatedRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Build" />
+    <Reference Include="Microsoft.Build.Engine" />
+    <Reference Include="Microsoft.Build.Framework" />
+    <Reference Include="Microsoft.Build.Utilities.v4.0" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="StatDescriptive, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\StatDescriptive.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Attributes\AlgoDeskPropertyAttribute.cs" />
+    <Compile Include="Attributes\CustomConnectionOptionAttribute.cs" />
+    <Compile Include="Attributes\ExcludePriceTypeAttribute.cs" />
+    <Compile Include="Classes\AssetChangeEventArgs.cs" />
+    <Compile Include="Classes\TickUpdateEventArgs.cs" />
+    <Compile Include="Classes\OrderChangeEventArgs.cs" />
+    <Compile Include="Classes\PositionChangeEventArgs.cs" />
+    <Compile Include="Classes\TrulyObservableCollection.cs" />
+    <Compile Include="Classes\UI\ColumnConfig.cs" />
+    <Compile Include="Classes\Exporters\Exporter.cs" />
+    <Compile Include="Classes\GridColumnCustomization.cs" />
+    <Compile Include="Classes\GridColumnInfo.cs" />
+    <Compile Include="Classes\PresetObject.cs" />
+    <Compile Include="Attributes\VisibleAttribute.cs" />
+    <Compile Include="Classes\TempObjectType.cs" />
+    <Compile Include="Classes\Theme.cs" />
+    <Compile Include="Classes\UI\ColumnInfo.cs" />
+    <Compile Include="Classes\Validators\EmptyStringRule.cs" />
+    <Compile Include="Classes\DataSeriesValue.cs" />
+    <Compile Include="Classes\ValueWrapper.cs" />
+    <Compile Include="Controllers\CodeGenerators\BaseGenerator.cs" />
+    <Compile Include="Controllers\CodeGenerators\IndicatorCodeGenerator.cs" />
+    <Compile Include="Controllers\EmailService.cs" />
+    <Compile Include="Converters\CheckToIGridLengthConverter.cs" />
+    <Compile Include="Converters\ColumnToIGridLengthConverter.cs" />
+    <Compile Include="Converters\ColumnToWidthConverter.cs" />
+    <Compile Include="Converters\ColumnToVisibilityConverter.cs" />
+    <Compile Include="Converters\BoolNegateConverter.cs" />
+    <Compile Include="Converters\BoolToVisibilityConverter.cs" />
+    <Compile Include="Converters\CheckToColorConverter.cs" />
+    <Compile Include="Converters\CommissionJsonConverter.cs" />
+    <Compile Include="Converters\ListToStringConverter.cs" />
+    <Compile Include="Converters\VisibilityToBoolConverter.cs" />
+    <Compile Include="Converters\ColumnToIndexConverter.cs" />
+    <Compile Include="Converters\MySmartExpandableObjectConverter.cs" />
+    <Compile Include="Converters\OptimizerJsonConverter.cs" />
+    <Compile Include="Converters\OptimizerParameterJsonConverter.cs" />
+    <Compile Include="CustomProperties\Behaviors\TextBoxInputBehavior.cs" />
+    <Compile Include="CustomProperties\CustomObjectType.cs" />
+    <Compile Include="CustomProperties\Editors\ProviderSpecificFieldsEditor.xaml.cs">
+      <DependentUpon>ProviderSpecificFieldsEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataCalc\BarSeries.cs" />
+    <Compile Include="DataCalc\CalcHelper.cs" />
+    <Compile Include="DataCalc\Commissions\Commission.cs" />
+    <Compile Include="DataCalc\DataSeries\ExtraDataSeries.cs" />
+    <Compile Include="DataCalc\LongSeries.cs" />
+    <Compile Include="DataCalc\MoneyManagement\MoneyManagment.cs" />
+    <Compile Include="DataCalc\Performance\PerformanceOptions.cs" />
+    <Compile Include="DataProviders\All\All.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\Custom\DepthDataRequest.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\UserDataSpotWebSocketMessages.cs" />
+    <Compile Include="DataProviders\Bybit\Bybit.cs" />
+    <Compile Include="DataProviders\Bybit\BybitAPIProcessor.cs" />
+    <Compile Include="DataProviders\Bybit\BybitClient.cs" />
+    <Compile Include="DataProviders\Bybit\BybitConnectionOptions.cs" />
+    <Compile Include="DataProviders\Bybit\BybitEndpoints.cs" />
+    <Compile Include="DataProviders\Bybit\BybitInstrumentManager.cs" />
+    <Compile Include="DataProviders\Bybit\BybitInstrumentViewModel.cs" />
+    <Compile Include="DataProviders\Bybit\Classes\InstrumentInfo.cs" />
+    <Compile Include="DataProviders\Bybit\Classes\InstrumentInfoList.cs" />
+    <Compile Include="DataProviders\Bybit\Classes\LotSizeFilter.cs" />
+    <Compile Include="DataProviders\Common\OrderBooks\MarketDataType.cs" />
+    <Compile Include="DataProviders\Common\OrderBooks\OrderBook.cs" />
+    <Compile Include="DataProviders\Bybit\Classes\PriceFilter.cs" />
+    <Compile Include="DataProviders\Bybit\Classes\PriceLevel.cs" />
+    <Compile Include="DataProviders\Bybit\Classes\SymbolTicker.cs" />
+    <Compile Include="DataProviders\Bybit\Classes\KlineCandleStickList.cs" />
+    <Compile Include="DataProviders\Bybit\Classes\TickersList.cs" />
+    <Compile Include="DataProviders\Bybit\Converter\BybitBookOrderInfoConverter.cs" />
+    <Compile Include="DataProviders\Bybit\Converter\EpochTimeConverter.cs" />
+    <Compile Include="DataProviders\Bybit\Converter\ExchangeInfoSymbolFilterConverter.cs" />
+    <Compile Include="DataProviders\Bybit\Converter\AssestsConverter.cs" />
+    <Compile Include="DataProviders\Bybit\Converter\KlineCandleSticksConverter.cs" />
+    <Compile Include="DataProviders\Bybit\Converter\StringDecimalConverter.cs" />
+    <Compile Include="DataProviders\Bybit\Converter\TickersResponseConverter.cs" />
+    <Compile Include="DataProviders\Bybit\Converter\TimespanConverter.cs" />
+    <Compile Include="DataProviders\Bybit\Converter\TraderPriceConverter.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\DepositHistoryStatus.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\ExchangeInfoOrderType.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\ExchangeInfoSymbolFilterType.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\ExecutionType.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\KlineInterval.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\MarketType.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\NewOrderResponseType.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\OrderRejectReason.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\OrderSide.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\OrderStatus.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\OrderType.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\PartialDepthLevels.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\SystemStatus.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\TimeInForce.cs" />
+    <Compile Include="DataProviders\Bybit\Enums\WithdrawHistoryStatus.cs" />
+    <Compile Include="DataProviders\Bybit\Extensions\DateTimeExtensions.cs" />
+    <Compile Include="DataProviders\Bybit\Extensions\EnumExtensions.cs" />
+    <Compile Include="DataProviders\Bybit\IBybitInstrument.cs" />
+    <Compile Include="DataProviders\Bybit\Market\TradingPairSymbols.cs" />
+    <Compile Include="DataProviders\Bybit\Models\BybitInstrument.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Filter.cs" />
+    <Compile Include="DataProviders\Bybit\Models\InstrumentTicker.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\AccountRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\AllOrdersRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\AllTradesRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\CancelOrderRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\CreateOrderRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\CurrentOpenOrdersRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\Custom\DepthDataRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\GetAssetInfoRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\CurrentPositionInformationRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\Custom\HistoricalDataRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\Custom\LiveDataRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\DepositAddressRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\ExchangeInfo.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\FundHistoryRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\GetCompressedAggregateTradesRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\GetTickersRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\AccountWalletResult.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\AccountWalletResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ModifyOrderResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ModifyOrderResult.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\AssetResult.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\SpotResult.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\PositionResult.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\AssetsResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\PositionsResult.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\OrdersResult.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\OrderResult.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\AccountInformationResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\AccountTradeReponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\AcknowledgeCreateOrderResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\BalanceResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\CancelOrderResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\CompressedAggregateTradeResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\DepositAddressResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\DepositListItem.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\DepositListResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\EmptyResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoRateLimit.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbol.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilter.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterExchangeMaxNumAlgoOrders.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterExchangeMaxNumOrders.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterIcebergParts.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterLotSize.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterMarketLotSize.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterMaxNumAlgoOrders.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterMaxNumIcebergOrders.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterMaxNumOrders.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterMaxPosition.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterMinNotional.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterPercentagePrice.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterPercentPrice.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ExchangeInfoSymbolFilterPrice.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Fill.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\NewOrderResult.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\GetInstrumentInfoResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\GetInstrumentsRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\GetKlinesCandlesticksRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\ModifyOrderRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\QueryOrderRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Request\WithdrawRequest.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Abstract\BaseCreateOrderResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Custom\HistoricalCandle.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Error\BybitBadRequestException.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Error\BybitError.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Error\BybitException.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Error\BybitServerException.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Error\BybitTimeoutException.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Error\BybitUnauthorizedException.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\InstrumentResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\InstrumentTickersResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Interfaces\IBalanceResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\Interfaces\IConfirmationResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\KlineCandleStick.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\KlineCandleStickResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\OrderBookResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\PositionsResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\OrdersResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\PositionResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\NewOrderResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\ServerTimeResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\SymbolOrderBookResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\SymbolPriceChangeTickerResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\SymbolPriceResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\SystemStatusResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\TickerInfo.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\TickerResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\TradeResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\UserDataStreamResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\WithdrawListItem.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\WithdrawListResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\Response\WithdrawResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\ResultSets\BuySellDepthVolume.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BalanceResponseData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitWebsocketMessageHandler.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitAccountUpdateData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitAggregateTradeData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitCombinedDepthData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitDataCombined.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitDepthData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitKline.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitKlineResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitKlineData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitPartialData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitPartialDepthData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitTradeData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitTradeOrderData.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\BybitWebSocketResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\DepthCacheObject.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Interfaces\ISymbolWebSocketResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Interfaces\IWebSocketResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\KlineCacheObject.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\KlineCandleStick.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\KlineIntervalCacheObject.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitBookOrderInfo.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitBookOrdersInfo.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitCoinInfo.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitOrderBookResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitWalletInfo.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitPositionInfo.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitOrderInfo.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitWalletResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitPositionResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\Reponse\BybitOrderResponse.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\TradeDepthDelta.cs" />
+    <Compile Include="DataProviders\Bybit\Models\WebSocket\UserDataWebSocketMessages.cs" />
+    <Compile Include="DataProviders\Bybit\UI\BybitInstrumentListView.xaml.cs">
+      <DependentUpon>BybitInstrumentListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataProviders\Bybit\UI\BybitInstrumentsView.xaml.cs">
+      <DependentUpon>BybitInstrumentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataProviders\Bybit\Utility\Guard.cs" />
+    <Compile Include="DataProviders\Bybit\Utility\PreparePartialString.cs" />
+    <Compile Include="DataProviders\Bybit\Websockets\AbstractBybitWebSocketClient.cs" />
+    <Compile Include="DataProviders\Bybit\Websockets\BybitWebSocket.cs" />
+    <Compile Include="DataProviders\Bybit\Websockets\BybitWebsocketMessageHandler.cs" />
+    <Compile Include="DataProviders\Bybit\Websockets\DisposableBybitWebSocketClient.cs" />
+    <Compile Include="DataProviders\Bybit\Websockets\IBybitWebSocketClient.cs" />
+    <Compile Include="DataProviders\Bybit\Websockets\InstanceBybitWebSocketClient.cs" />
+    <Compile Include="DataProviders\Bybit\Websockets\UserDataWebSocketMessages.cs" />
+    <Compile Include="DataProviders\Binance\BinanceAPIProcessor.cs" />
+    <Compile Include="DataProviders\Binance\Binance.cs" />
+    <Compile Include="DataProviders\Binance\BinanceClient.cs" />
+    <Compile Include="DataProviders\Binance\Converter\EpochTimeConverter.cs" />
+    <Compile Include="DataProviders\Binance\Converter\ExchangeInfoSymbolFilterConverter.cs" />
+    <Compile Include="DataProviders\Binance\Converter\TickersResponseConverter.cs" />
+    <Compile Include="DataProviders\Binance\Converter\KlineCandleSticksConverter.cs" />
+    <Compile Include="DataProviders\Binance\Converter\StringDecimalConverter.cs" />
+    <Compile Include="DataProviders\Binance\Converter\TimespanConverter.cs" />
+    <Compile Include="DataProviders\Binance\Converter\TraderPriceConverter.cs" />
+    <Compile Include="DataProviders\Binance\BinanceEndpoints.cs" />
+    <Compile Include="DataProviders\Binance\BinanceConnectionOptions.cs" />
+    <Compile Include="DataProviders\Binance\BinanceInstrumentManager.cs" />
+    <Compile Include="DataProviders\Binance\BinanceInstrumentViewModel.cs" />
+    <Compile Include="DataProviders\Binance\Enums\DepositHistoryStatus.cs" />
+    <Compile Include="DataProviders\Binance\Enums\ExchangeInfoOrderType.cs" />
+    <Compile Include="DataProviders\Binance\Enums\ExchangeInfoSymbolFilterType.cs" />
+    <Compile Include="DataProviders\Binance\Enums\ExecutionType.cs" />
+    <Compile Include="DataProviders\Binance\Enums\KlineInterval.cs" />
+    <Compile Include="DataProviders\Binance\Enums\MarketType.cs" />
+    <Compile Include="DataProviders\Binance\Enums\NewOrderResponseType.cs" />
+    <Compile Include="DataProviders\Binance\Enums\OrderRejectReason.cs" />
+    <Compile Include="DataProviders\Binance\Enums\OrderSide.cs" />
+    <Compile Include="DataProviders\Binance\Enums\OrderStatus.cs" />
+    <Compile Include="DataProviders\Binance\Enums\OrderType.cs" />
+    <Compile Include="DataProviders\Binance\Enums\PartialDepthLevels.cs" />
+    <Compile Include="DataProviders\Binance\Enums\SystemStatus.cs" />
+    <Compile Include="DataProviders\Binance\Enums\TimeInForce.cs" />
+    <Compile Include="DataProviders\Binance\Enums\WithdrawHistoryStatus.cs" />
+    <Compile Include="DataProviders\Binance\Extensions\DateTimeExtensions.cs" />
+    <Compile Include="DataProviders\Binance\Extensions\EnumExtensions.cs" />
+    <Compile Include="DataProviders\Binance\IBinanceInstrument.cs" />
+    <Compile Include="DataProviders\Binance\Market\TradingPairSymbols.cs" />
+    <Compile Include="DataProviders\Binance\Models\InstrumentTicker.cs" />
+    <Compile Include="DataProviders\Binance\Models\BinanceInstrument.cs" />
+    <Compile Include="DataProviders\Binance\Models\Filter.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\AccountRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\ModifyOrderRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\CurrentPositionInformationRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\AllOrdersRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\AllTradesRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\CancelOrderRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\CreateOrderRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\CurrentOpenOrdersRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\Custom\LiveDataRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\DepositAddressRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\ExchangeInfo.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\FundHistoryRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\GetCompressedAggregateTradesRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\Custom\HistoricalDataRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\GetKlinesCandlesticksRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\QueryOrderRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Request\WithdrawRequest.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Abstract\BaseCreateOrderResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\AccountInformationResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\AccountTradeReponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\AcknowledgeCreateOrderResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\BalanceResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\CancelOrderResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\CompressedAggregateTradeResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Custom\HistoricalCandle.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\DepositAddressResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\DepositListItem.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\DepositListResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\EmptyResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Error\BinanceBadRequestException.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Error\BinanceError.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Error\BinanceException.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Error\BinanceServerException.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Error\BinanceUnauthorizedException.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Error\BinanceTimeoutException.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoRateLimit.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\TickerInfo.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbol.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilter.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterExchangeMaxNumAlgoOrders.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterExchangeMaxNumOrders.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterIcebergParts.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterLotSize.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterMarketLotSize.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterMaxNumAlgoOrders.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterMaxNumIcebergOrders.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterMaxNumOrders.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterMaxPosition.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterMinNotional.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterPercentagePrice.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterPercentPrice.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ExchangeInfoSymbolFilterPrice.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Fill.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\FullCreateOrderResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\InstrumentTickersResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\TickerResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\InstrumentResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Interfaces\IBalanceResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\Interfaces\IConfirmationResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\KlineCandleStickResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\OrderBookResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\PositionResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\OrderResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ResultCreateOrderResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\ServerTimeResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\SymbolOrderBookResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\SymbolPriceChangeTickerResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\SymbolPriceResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\SystemStatusResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\TradeResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\UserDataStreamResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\WithdrawListItem.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\WithdrawListResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\Response\WithdrawResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\ResultSets\BuySellDepthVolume.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BalanceResponseData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceAccountUpdateData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceAggregateTradeData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceCombinedDepthData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceDataCombined.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceDepthData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceKline.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceKlineData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinancePartialData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinancePartialDepthData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceTradeData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceTradeOrderData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\BinanceWebSocketResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\DepthCacheObject.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Futures\AccountInformationResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Futures\AssetInformation.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Futures\PositionInformation.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Futures\PositionData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Futures\BalanceData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Futures\BinanceAccountData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Futures\BinanceAccountUpdateData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Futures\BinanceTradeOrderData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Futures\TradeOrderObjectData.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Interfaces\ISymbolWebSocketResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\Interfaces\IWebSocketResponse.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\KlineCacheObject.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\KlineCandleStick.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\KlineIntervalCacheObject.cs" />
+    <Compile Include="DataProviders\Binance\Models\WebSocket\TradeDepthDelta.cs" />
+    <Compile Include="DataProviders\Binance\UI\BinanceInstrumentListView.xaml.cs">
+      <DependentUpon>BinanceInstrumentListView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataProviders\Binance\UI\BinanceInstrumentsView.xaml.cs">
+      <DependentUpon>BinanceInstrumentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DataProviders\Binance\Utility\Guard.cs" />
+    <Compile Include="DataProviders\Binance\Utility\PreparePartialString.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\AbstractBinanceWebSocketClient.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\BinanceWebSocket.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\BinanceWebsocketMessageHandler.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\DisposableBinanceWebSocketClient.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\IBinanceWebSocketClient.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\InstanceBinanceWebSocketClient.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\UserDataFuturesWebSocketMessages.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\UserDataWebSocketMessages.cs" />
+    <Compile Include="DataProviders\Binance\Websockets\WebSocketConnectionFunc.cs" />
+    <Compile Include="DataProviders\Common\BaseEndpoints.cs" />
+    <Compile Include="DataProviders\Common\BaseInstrumentManager.cs" />
+    <Compile Include="DataProviders\Common\OrderBooks\OrderBookResult.cs" />
+    <Compile Include="DataProviders\Common\OrderBooks\PriceLevel.cs" />
+    <Compile Include="DataProviders\Common\Request\CancelOrderRequest.cs" />
+    <Compile Include="DataProviders\Common\Request\ChangeOrderRequest.cs" />
+    <Compile Include="DataProviders\Common\Response\AccountChangedResponse.cs" />
+    <Compile Include="DataProviders\Common\Response\HistoricalDataResponse.cs" />
+    <Compile Include="DataProviders\Common\Response\AssetChangedResponse.cs" />
+    <Compile Include="DataProviders\Common\Response\PositionChangedResponse.cs" />
+    <Compile Include="DataProviders\Common\Response\OrderStatusChangedResponse.cs" />
+    <Compile Include="DataProviders\DataReaders\Csv\Map\Classes\Candle.cs" />
+    <Compile Include="DataProviders\DataReaders\Csv\Map\MapHeaders\CandleMapHeader.cs" />
+    <Compile Include="DataProviders\DataReaders\Csv\Map\MapHeaders\HistoricalCandleReadMapHeader.cs" />
+    <Compile Include="DataProviders\Enums\ConnectionType.cs" />
+    <Compile Include="DataProviders\Enums\PriceLevelOperation.cs" />
+    <Compile Include="DataProviders\ExchangeMockUp\ExchangeMockUp.cs" />
+    <Compile Include="DataProviders\Common\Request\SubmitOrderRequest.cs" />
+    <Compile Include="DataProviders\Interfaces\IInstrumentManager.cs" />
+    <Compile Include="DataProviders\Interfaces\IPriceLevel.cs" />
+    <Compile Include="DataProviders\Playback\PlaybackConnectionOptions.cs" />
+    <Compile Include="DataProviders\Playback\PlaybackClient.cs" />
+    <Compile Include="DataProviders\Playback\Playback.cs" />
+    <Compile Include="Enums\AccountType.cs" />
+    <Compile Include="Enums\ConnectionStatus.cs" />
+    <Compile Include="Enums\DataCalcPeriodType.cs" />
+    <Compile Include="Enums\DataSeriesFormat.cs" />
+    <Compile Include="Enums\HistoricalOrderDirection.cs" />
+    <Compile Include="Enums\OrderEnvironment.cs" />
+    <Compile Include="Enums\PerformanceMode.cs" />
+    <Compile Include="Enums\PlotExecutions.cs" />
+    <Compile Include="Enums\OrderChangeAction.cs" />
+    <Compile Include="Enums\AssetChangeAction.cs" />
+    <Compile Include="Enums\PositionChangeAction.cs" />
+    <Compile Include="Enums\PresetFormMode.cs" />
+    <Compile Include="Enums\TradeSourceType.cs" />
+    <Compile Include="Helpers\CloneHelper.cs" />
+    <Compile Include="Helpers\CollectionHelper.cs" />
+    <Compile Include="Helpers\DatePickerHelper.cs" />
+    <Compile Include="Helpers\MathHelper.cs" />
+    <Compile Include="Helpers\PresetHelper.cs" />
+    <Compile Include="Controllers\SystemDefaultValues.cs" />
+    <Compile Include="Converters\EnumToCollectionConverter.cs" />
+    <Compile Include="Converters\FilterEnumToCollectionConverter.cs" />
+    <Compile Include="Converters\IntConverter.cs" />
+    <Compile Include="Converters\ListOfElementWithErrorsToBoolConverter.cs" />
+    <Compile Include="Converters\ValueToColorConverter.cs" />
+    <Compile Include="CustomProperties\Controls\DaraSeriesControl.xaml.cs">
+      <DependentUpon>DaraSeriesControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomProperties\Converters\ExcludePriceTypeConverter.cs" />
+    <Compile Include="CustomProperties\Converters\SeriesNameConverter.cs" />
+    <Compile Include="CustomProperties\DynamicTypeDescriptor.cs" />
+    <Compile Include="CustomProperties\Editors\DataSeriesParamWindow.xaml.cs">
+      <DependentUpon>DataSeriesParamWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomProperties\Editors\OptimizerParametersWindow.xaml.cs">
+      <DependentUpon>OptimizerParametersWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomProperties\Editors\SelectSeriesWindow.xaml.cs">
+      <DependentUpon>SelectSeriesWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomProperties\Editors\OptimizerParametersEditor.xaml.cs">
+      <DependentUpon>OptimizerParametersEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomProperties\Editors\DataSeriesEditor.xaml.cs">
+      <DependentUpon>DataSeriesEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomProperties\Editors\SeriesEditor.xaml.cs">
+      <DependentUpon>SeriesEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomProperties\Controls\EnumControl.xaml.cs">
+      <DependentUpon>EnumControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomProperties\ListItemPropertyDescriptor.cs" />
+    <Compile Include="CustomProperties\PropertyInfo.cs" />
+    <Compile Include="DataCalc\Optimization\OptimizationFitness.cs" />
+    <Compile Include="DataCalc\Optimization\Optimizer.cs" />
+    <Compile Include="CustomProperties\ViewModels\SelectSeriesViewModel.cs" />
+    <Compile Include="DataCalc\CalcStat\CalcStat.cs" />
+    <Compile Include="DataCalc\CalcStat\DrawDown.cs" />
+    <Compile Include="DataCalc\ColorMap.cs" />
+    <Compile Include="DataCalc\DataCalcObject.cs" />
+    <Compile Include="DataCalc\DataCalcContext.cs" />
+    <Compile Include="DataCalc\DateTimeSeries.cs" />
+    <Compile Include="CustomProperties\ExpandableList.cs" />
+    <Compile Include="DataCalc\Draw.cs" />
+    <Compile Include="DataCalc\Optimization\BoolOptimizerParameter.cs" />
+    <Compile Include="DataCalc\Optimization\IntegerOptimizerParameter.cs" />
+    <Compile Include="DataCalc\Optimization\EnumOptimizerParameter.cs" />
+    <Compile Include="DataCalc\Optimization\DoubleOptimizerParameter.cs" />
+    <Compile Include="DataCalc\Optimization\OptimizerParameter.cs" />
+    <Compile Include="DataCalc\StrategyBase.cs" />
+    <Compile Include="DataCalc\ScriptOptions.cs" />
+    <Compile Include="DataCalc\ScriptBase.cs" />
+    <Compile Include="DataCalc\Performance\AnalyticItem.cs" />
+    <Compile Include="DataCalc\Performance\SummaryItem.cs" />
+    <Compile Include="DataCalc\Performance\Summary.cs" />
+    <Compile Include="DataCalc\Performance\SystemPerformance.cs" />
+    <Compile Include="DataProviders\Common\AlgoDeskTimeoutException.cs" />
+    <Compile Include="DataProviders\Common\AlgoDeskBadRequestException.cs" />
+    <Compile Include="DataProviders\Common\AlgoDeskServerException.cs" />
+    <Compile Include="DataProviders\DataReaders\Csv\CsvDataReader.cs" />
+    <Compile Include="DataProviders\DataReaders\Csv\Map\CandleMapHeader.cs" />
+    <Compile Include="DataProviders\DataWriters\Csv\CsvDataWriter.cs" />
+    <Compile Include="DataProviders\DataWriters\Csv\Map\DxFeed\MapHeaders\HistoricalCandleWriteMapHeader.cs" />
+    <Compile Include="DataProviders\Common\AlgoDeskError.cs" />
+    <Compile Include="DataProviders\Common\AlgoDeskException.cs" />
+    <Compile Include="DataProviders\Common\Caching\APICacheManager.cs" />
+    <Compile Include="DataProviders\Common\Caching\IAPICacheManager.cs" />
+    <Compile Include="DataProviders\Common\EndpointData.cs" />
+    <Compile Include="DataProviders\Common\ClientConfiguration.cs" />
+    <Compile Include="DataProviders\Common\ConnectionBase.cs" />
+    <Compile Include="DataProviders\Common\ConnectionOptionsBase.cs" />
+    <Compile Include="DataCalc\IndicatorBase.cs" />
+    <Compile Include="Classes\Logger.cs" />
+    <Compile Include="Classes\LogMessage.cs" />
+    <Compile Include="Classes\OperationCommand.cs" />
+    <Compile Include="DataCalc\Series.cs" />
+    <Compile Include="DataCalc\SeriesValue.cs" />
+    <Compile Include="Classes\Session.cs" />
+    <Compile Include="DataProviders\Common\RequestClient.cs" />
+    <Compile Include="Controllers\BuildController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\DebugController.cs" />
+    <Compile Include="Controllers\SystemOptions.cs" />
+    <Compile Include="DataProviders\Enums\EndpointSecurityType.cs" />
+    <Compile Include="DataProviders\Enums\HttpVerb.cs" />
+    <Compile Include="DataProviders\Extensions\DateTimeExtensions.cs" />
+    <Compile Include="DataProviders\Interfaces\IAPIProcessor.cs" />
+    <Compile Include="DataProviders\Interfaces\IDataProvider.cs" />
+    <Compile Include="DataProviders\Interfaces\IDataProviderClient.cs" />
+    <Compile Include="DataProviders\Interfaces\IRequest.cs" />
+    <Compile Include="DataProviders\Interfaces\IResponse.cs" />
+    <Compile Include="DataProviders\Utility\Guard.cs" />
+    <Compile Include="DataCalc\DoubleSeries.cs" />
+    <Compile Include="Enums\AnalyticalFeature.cs" />
+    <Compile Include="Enums\AnalyticSection.cs" />
+    <Compile Include="Enums\CalcMode.cs" />
+    <Compile Include="Enums\CandleProperty.cs" />
+    <Compile Include="Enums\CompileState.cs" />
+    <Compile Include="Enums\DataSeriesType.cs" />
+    <Compile Include="Enums\ErrorCode.cs" />
+    <Compile Include="Enums\GraphType.cs" />
+    <Compile Include="Enums\MarketPosition.cs" />
+    <Compile Include="Enums\OrderAction.cs" />
+    <Compile Include="Enums\OrderState.cs" />
+    <Compile Include="Enums\OrderType.cs" />
+    <Compile Include="Enums\PerformanceSourceType.cs" />
+    <Compile Include="Enums\PlotStyle.cs" />
+    <Compile Include="DataProviders\Interfaces\IConnection.cs" />
+    <Compile Include="Enums\PresetType.cs" />
+    <Compile Include="Enums\PriceType.cs" />
+    <Compile Include="Enums\PropertyVisibility.cs" />
+    <Compile Include="Enums\State.cs" />
+    <Compile Include="Enums\StrategyPerformanceSection.cs" />
+    <Compile Include="Enums\TimeFrameBase.cs" />
+    <Compile Include="Helpers\EnumHelper.cs" />
+    <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Interfaces\IOptimizerStrategyPreset.cs" />
+    <Compile Include="Interfaces\IPainLevel.cs" />
+    <Compile Include="Interfaces\IHistoricalCandle.cs" />
+    <Compile Include="Interfaces\IDataSeriesParams.cs" />
+    <Compile Include="Interfaces\ITrade.cs" />
+    <Compile Include="Interfaces\IValidatorStrategyPreset.cs" />
+    <Compile Include="Managers\HistoricalDataManager.cs" />
+    <Compile Include="Market\Account.cs" />
+    <Compile Include="Market\Order.cs" />
+    <Compile Include="Market\Asset.cs" />
+    <Compile Include="Market\Position.cs" />
+    <Compile Include="Market\Trade.cs" />
+    <Compile Include="Messages\MessageEventArgs.cs" />
+    <Compile Include="Classes\HistoricalData.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Styles.xaml.cs">
+      <DependentUpon>Styles.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\Enums\DataSeriesTestSettings.cs" />
+    <Compile Include="Tests\Enums\IndicatorValueCheckSettings.cs" />
+    <Compile Include="Tests\Enums\IndicatorSpeedSettings.cs" />
+    <Compile Include="Tests\Enums\StrategySpeedSettings.cs" />
+    <Compile Include="Tests\Enums\StrategyValueCheckSettings.cs" />
+    <Compile Include="UI\Views\NoTemplateView.xaml.cs">
+      <DependentUpon>NoTemplateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Controls\CustomizationListView.cs" />
+    <Compile Include="UI\Extensions\TextBoxExtensions.cs" />
+    <Compile Include="UI\Views\ChartParamView.xaml.cs">
+      <DependentUpon>ChartParamView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Windows\InstrumentParamWindow.xaml.cs">
+      <DependentUpon>InstrumentParamWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Windows\InstrumentWindow.xaml.cs">
+      <DependentUpon>InstrumentWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Windows\GoToDateWindow.xaml.cs">
+      <DependentUpon>GoToDateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Windows\PlaybackWindow.xaml.cs">
+      <DependentUpon>PlaybackWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Windows\Presets\PresetNameWindow.xaml.cs">
+      <DependentUpon>PresetNameWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Windows\Presets\PresetsWindow.xaml.cs">
+      <DependentUpon>PresetsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\Windows\ViewSettingsWindow.xaml.cs">
+      <DependentUpon>ViewSettingsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\DataSeries\ChartParamsViewModel.cs" />
+    <Compile Include="ViewModels\DataSeries\DataSeriesParamsEmpty.cs" />
+    <Compile Include="ViewModels\DataSeries\DataSeriesParamsViewModel.cs" />
+    <Compile Include="ViewModels\DataSeries\InstrumentDataParamsViewModel.cs" />
+    <Compile Include="ViewModels\Instruments\InstrumentListViewModel.cs" />
+    <Compile Include="ViewModels\Instruments\InstrumentMapViewModel.cs" />
+    <Compile Include="ViewModels\Instruments\InstrumentViewModel.cs" />
+    <Compile Include="ViewModels\Presets\PresetsViewModel.cs" />
+    <Compile Include="ViewModels\Presets\PresetViewModel.cs" />
+    <Compile Include="ViewModels\ScriptObjects\ScriptObjectItemViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelBase.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper">
+      <Version>10.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="CsvHelper">
+      <Version>26.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Extended.Wpf.Toolkit">
+      <Version>4.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="Google.Protobuf">
+      <Version>3.22.1</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis">
+      <Version>3.7.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.Common">
+      <Version>3.7.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp">
+      <Version>3.7.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore">
+      <Version>2.1.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory">
+      <Version>2.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="PDFsharp-MigraDoc">
+      <Version>1.50.5147</Version>
+    </PackageReference>
+    <PackageReference Include="protobuf-net">
+      <Version>2.4.8</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe">
+      <Version>4.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Runtime.Serialization.Primitives">
+      <Version>4.3.0</Version>
+    </PackageReference>
+    <PackageReference Include="System.Windows.Interactivity.WPF">
+      <Version>2.0.20525</Version>
+    </PackageReference>
+    <PackageReference Include="WebSocketSharp-netstandard">
+      <Version>1.0.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resource.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="copy.bat" />
+    <None Include="Resources\CompiledSuccessfully.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Connected.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Twm.Chart\Twm.Chart.csproj">
+      <Project>{bdaef42d-862c-475c-94c0-c3f47f5f5baa}</Project>
+      <Name>Twm.Chart</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Twm.DB\Twm.DB.csproj">
+      <Project>{2d275cc5-09fd-402f-9616-13de564c8723}</Project>
+      <Name>Twm.DB</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Twm.Model\Twm.Model.csproj">
+      <Project>{4034acf0-06a7-418d-8e2c-93223815ab00}</Project>
+      <Name>Twm.Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\favicon.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Lib\StatDescriptive.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="CustomProperties\Controls\DaraSeriesControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>XamlIntelliSenseFileGenerator</Generator>
+    </Page>
+    <Page Include="CustomProperties\Editors\DataSeriesParamWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomProperties\Editors\OptimizerParametersWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomProperties\Editors\SelectSeriesWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomProperties\Editors\OptimizerParametersEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomProperties\Editors\DataSeriesEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomProperties\Editors\ProviderSpecificFieldsEditor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="CustomProperties\Editors\SeriesEditor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomProperties\Controls\EnumControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DataProviders\Bybit\UI\BybitInstrumentListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataProviders\Bybit\UI\BybitInstrumentsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataProviders\Binance\UI\BinanceInstrumentListView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DataProviders\Binance\UI\BinanceInstrumentsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Views\NoTemplateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Views\ChartParamView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Windows\InstrumentParamWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Windows\InstrumentWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Windows\GoToDateWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Windows\PlaybackWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Windows\Presets\PresetNameWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Windows\Presets\PresetsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UI\Windows\ViewSettingsWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>"$(ProjectDir)copy.bat" $(TargetDir) $(SolutionDir)</PostBuildEvent>
+  </PropertyGroup>
+</Project>

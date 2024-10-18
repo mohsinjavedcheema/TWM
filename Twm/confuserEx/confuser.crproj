@@ -1,0 +1,59 @@
+<project outputDir="{OutputDir}" baseDir="{OutputDir}" xmlns="http://confuser.codeplex.com">
+  <rule pattern="true" />
+  <module path="{ModuleName}">
+    <rule pattern="true">
+      <protection id="anti ildasm" />
+      <protection id="anti tamper" />
+      <protection id="ctrl flow" />
+      <protection id="anti debug" />      
+      <protection id="constants" />
+      <protection id="invalid metadata" />
+      <!--protection id="resources" /-->
+    </rule>
+  </module>
+  <module path="{ModuleNameChart}">
+    <rule pattern="true">
+      <protection id="anti ildasm" />
+      <protection id="anti tamper" />
+      <protection id="ctrl flow" />
+      <protection id="anti debug" />
+      <protection id="constants" />
+      <protection id="invalid metadata" />
+      <!--protection id="resources" /-->
+    </rule>
+  </module>
+  <module path="{ModuleNameCore}">
+    <rule pattern="true">
+      <protection id="anti ildasm" />
+      <protection id="anti tamper" />
+      <protection id="ctrl flow" />
+      <protection id="anti debug" />
+      <protection id="constants" />
+      <protection id="invalid metadata" />
+      <!--protection id="resources" /-->
+    </rule>
+  </module>
+  <module path="{ModuleNameDB}">
+    <rule pattern="true">
+      <protection id="anti ildasm" />
+      <protection id="anti tamper" />
+      <protection id="ctrl flow" />
+      <protection id="anti debug" />
+      <protection id="constants" />
+      <protection id="invalid metadata" />
+      <!--protection id="resources" /-->
+    </rule>
+  </module>
+  <module path="{ModuleNameModel}">
+    <rule pattern="true">
+      <protection id="anti ildasm" />
+      <protection id="anti tamper" />
+      <protection id="ctrl flow" />
+      <protection id="anti debug" />
+      <protection id="constants" />
+      <protection id="invalid metadata" />
+      <!--protection id="resources" /-->
+    </rule>
+  </module>
+  <probePath>{ReleaseDir}</probePath>
+</project>

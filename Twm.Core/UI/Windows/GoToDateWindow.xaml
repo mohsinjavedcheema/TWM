@@ -1,0 +1,56 @@
+﻿<Window x:Class="Twm.Core.UI.Windows.GoToDateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:helpers="clr-namespace:Twm.Core.Helpers"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:converters="clr-namespace:Twm.Core.Converters"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Topmost="True"
+        
+
+        Title="Playback" Height="150" Width="400">
+    <Grid Background="WhiteSmoke">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="70" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="70" />
+        </Grid.ColumnDefinitions>
+
+
+        <StackPanel Orientation="Horizontal" Margin="0,10" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="1"
+                    HorizontalAlignment="Left">
+            <Label Margin="10,0" Content="Date " />
+
+            <DatePicker Height="25" helpers:DatePickerHelper.ShowTodayButton="True"
+                        helpers:DatePickerHelper.ShowTodayButtonContent="Today">
+                <DatePicker.SelectedDate>
+                    <Binding Path="CurrentDate" Mode="TwoWay" />
+                </DatePicker.SelectedDate>
+            </DatePicker>
+
+            <Label Margin="10,0" Content="Time " />
+
+            <xctk:TimePicker Height="25" Width="100" Value="{Binding CurrentTime, Mode=TwoWay}" Format="Custom" FormatString="HH.mm.ss"
+                             AllowTextInput="False" >
+
+            </xctk:TimePicker>
+        </StackPanel>
+
+        <Button Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Right" FontSize="14" Width="75" Height="25" Content="OK" Click="ButtonBase_OnClick"  Margin="0,0,15,0" IsDefault="True" />
+
+
+    </Grid>
+
+
+</Window>

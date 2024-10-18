@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="Twm.Chart.Controls.ChartControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:converters="clr-namespace:Twm.Chart.Converters"
+             xmlns:controls="clr-namespace:Twm.Chart.Controls"
+             Background="{Binding ChartBackground, Mode=OneWay}"
+             mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <converters:BoolArrayToVisibilityConverter x:Key="BoolArrayToVisibilityConverter" />
+    </UserControl.Resources>
+    <Grid x:Name="chartView" SizeChanged="OnSizeChanged" MouseMove="OnMouseMoveInsidePriceChartContainer" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="4*" />
+        </Grid.RowDefinitions>
+
+        <Canvas Grid.Row="0" Grid.Column="0" Grid.RowSpan="100" Panel.ZIndex="100">
+            <Line Stroke="Gray" StrokeThickness="1" IsHitTestVisible="False"
+                  X1="0"
+                  Y1="{Binding Path=CurrentMousePosition.Y, Mode=OneWay}"
+                  X2="{Binding Path=AxisPosition.X, Mode=OneWay}"
+                  Y2="{Binding Path=CurrentMousePosition.Y, Mode=OneWay}">
+                <Line.Visibility>
+                    <MultiBinding Converter="{StaticResource BoolArrayToVisibilityConverter}">
+                        <Binding ElementName="chartView" Path="IsMouseOver" Mode="OneWay" />
+                        <Binding Path="IsCrossLinesVisible" Mode="OneWay" />
+                        <Binding Path="IsMouseInChartArea" Mode="OneWay" />
+                    </MultiBinding>
+                </Line.Visibility>
+            </Line>
+
+            <Line Stroke="Gray" StrokeThickness="1" IsHitTestVisible="False"
+                  X1="{Binding Path=CurrentMousePosition.X, Mode=OneWay}"
+                  Y1="0"
+                  X2="{Binding Path=CurrentMousePosition.X, Mode=OneWay}"
+                  Y2="{Binding Path=AxisPosition.Y, Mode=OneWay}">
+                <Line.Visibility>
+                    <MultiBinding Converter="{StaticResource BoolArrayToVisibilityConverter}">
+                        <Binding ElementName="chartView" Path="IsMouseOver" Mode="OneWay" />
+                        <Binding Path="IsCrossLinesVisible" Mode="OneWay" />
+                        <Binding Path="IsMouseInChartArea" Mode="OneWay" />
+                    </MultiBinding>
+                </Line.Visibility>
+            </Line>
+
+            <TextBox x:Name="crossHairPriceTextBox"
+                Background="LightGray" Foreground="Black" FontFamily="Verdana"
+                Canvas.Top="{Binding Path=CrossHairPriceTextBoxTop, Mode=OneWay}"
+                Canvas.Left="{Binding Path=AxisPosition.X, Mode=OneWay}"
+                Height="24"
+                VerticalContentAlignment="Center"
+                VerticalAlignment="Center"
+                Width="{Binding Path=PriceAxisWidth, Mode=OneWay}"
+                FontSize="{Binding Path=PriceTickFontSize, Mode=OneWay}"
+                Text="{Binding Path=CrossLinesPrice, Mode=OneWay}">
+                
+                <TextBox.Visibility>
+                    <MultiBinding Converter="{StaticResource BoolArrayToVisibilityConverter}">
+                        <Binding ElementName="chartView" Path="IsMouseOver" Mode="OneWay" />
+                        <Binding Path="IsCrossLinesVisible" Mode="OneWay" />
+                        <Binding Path="IsMouseInChartArea" Mode="OneWay" />
+                    </MultiBinding>
+                </TextBox.Visibility>
+            </TextBox>
+            <TextBox x:Name="crossHairTimeTextBox" SizeChanged="CrossHairTimeTextBox_OnSizeChanged"
+                Background="LightGray" Foreground="Black" FontFamily="Verdana"
+                BorderThickness="1,0,1,1"
+                Canvas.Top="{Binding Path=AxisPosition.Y, Mode=OneWay}"
+                Canvas.Left="{Binding Path=CrossHairTimeTextBoxLeft, Mode=OneWay}"
+                TextAlignment="Center"
+                Height="20"
+                Width="120"
+                VerticalContentAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="{Binding Path=TimeTickFontSize, Mode=OneWay}"
+                Text="{Binding Path=CrossLinesTime, Mode=OneWay}">
+                <TextBox.Visibility>
+                    <MultiBinding Converter="{StaticResource BoolArrayToVisibilityConverter}">
+                        <Binding ElementName="chartView" Path="IsMouseOver" Mode="OneWay" />
+                        <Binding Path="IsCrossLinesVisible" Mode="OneWay" />
+                        <Binding Path="IsMouseInChartArea" Mode="OneWay" />
+                    </MultiBinding>
+                </TextBox.Visibility>
+            </TextBox>
+        </Canvas>
+
+        <controls:PaneControl x:FieldModifier="public"  x:Name="MainPane" Grid.Row="0" Grid.Column="0" IsMainPane="True" Panel.ZIndex="4" Id="1"
+                        VerticalAxisVisibility="Visible" ScrollBarVisibility="Visible" />
+
+        <!--Dynamically add pane here-->
+    </Grid>
+</UserControl>

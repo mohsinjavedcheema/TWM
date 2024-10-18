@@ -1,0 +1,99 @@
+﻿<Window x:Class="Twm.Core.UI.Windows.ViewSettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Icon="/Assets/favicon.ico"
+        WindowStyle="ToolWindow"
+        
+        Title="Column settings" Height="500" Width="300">
+
+    <Grid Background="#55D3D3D3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+        <ListView Grid.Column="0" Grid.Row="0"  Margin="2"
+                  Style="{StaticResource listViewStyle}"
+                  ItemsSource="{Binding }">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Grid Margin="0" Background="Transparent">
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="40" />
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <Border BorderThickness="0,0,0,0"
+                                            Grid.Column="0"
+                                            BorderBrush="Gray">
+                                        <Label Style="{StaticResource itemViewStyle}"
+                                               Padding="5,0,0,0"
+
+                                               FontSize="16"
+                                               Background="{TemplateBinding Background}"
+                                               Content="{Binding Caption}">
+                                        </Label>
+                                    </Border>
+
+                                    <Border BorderThickness="0,0,0,0"
+                                            Grid.Column="1"
+                                            BorderBrush="Gray">
+                                        <CheckBox 
+                                               Padding="5,0,0,0"
+                                               VerticalAlignment="Center"
+                                               VerticalContentAlignment="Center"
+                                               HorizontalAlignment="Center"
+                                               HorizontalContentAlignment="Center"
+                                               FontSize="16"
+                                               Background="{TemplateBinding Background}"
+                                               IsChecked="{Binding Visibility, Mode=TwoWay, Converter={StaticResource visibilityToBoolConverter}}">
+                                        </CheckBox>
+                                    </Border>
+
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="2,0,0,0" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Height" Value="25" />
+                    <!--<Style.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="LightGray" />
+                        </MultiTrigger>
+                    </Style.Triggers>-->
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+       
+
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="1" Margin="2"
+                    HorizontalAlignment="Right">
+            <Button FontSize="14" Width="75" Height="25" Content="OK" Margin="0,0,5,0" Click="ButtonOKClick"
+                    Command="{Binding OKCommand}" />
+        </StackPanel>
+
+
+    </Grid>
+</Window>

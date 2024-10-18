@@ -1,0 +1,210 @@
+﻿<Window x:Class="Twm.Core.CustomProperties.Editors.OptimizerParametersWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:converters="clr-namespace:Twm.Core.CustomProperties.Converters"
+        xmlns:customProperties="clr-namespace:Twm.Core.CustomProperties"
+        xmlns:controls="clr-namespace:Twm.Core.CustomProperties.Controls"
+        xmlns:optimization="clr-namespace:Twm.Core.DataCalc.Optimization"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:behaviors="clr-namespace:Twm.Core.CustomProperties.Behaviors"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Title="Optimizer parameters" Height="600" Width="700">
+    <Grid Background="#55D3D3D3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="50" />
+        </Grid.RowDefinitions>
+
+
+        <ListView x:Name="lvOptimizerParameters"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="4" ItemsSource="{Binding OptimizerParameters}" 
+                  Margin="3,0,3,3"
+                  SelectedItem="{Binding SelectedParameter}">
+            <ListView.Resources>
+                <DataTemplate x:Key ="numericTemplate">
+                    <Border BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="0,0,0,0">
+                    <Grid Margin="0" Background="Transparent" Height="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsChecked}"/>
+                        <Border Grid.Column="1" Background="LightGray" BorderThickness="1,0,0,0" BorderBrush="Black">
+                            <TextBlock Text="{Binding DisplayName}" MaxWidth="150" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="14"  Background="LightGray" Margin="2,0,0,0" TextTrimming="CharacterEllipsis"/>
+                        </Border>
+                        <StackPanel Grid.Column="2" Orientation="Horizontal"  Background="LightGray">
+                            <Label Content="Default" Style="{StaticResource itemViewStyle}"  Padding="0"/>
+                            <TextBox Text="{Binding DefaultValue, Mode=OneTime}" IsEnabled="False" FontSize="14" Margin="10,0" Width="75" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                        </StackPanel>
+                        <Border Grid.Column="3" Background="Black"/>
+                                <StackPanel Grid.Column="4" Orientation="Horizontal" >
+                            <Label  Content="Min" Style="{StaticResource itemViewStyle}"  Padding="0"  Width="30" HorizontalContentAlignment="Center" />
+                                <TextBox Text="{Binding Min, UpdateSourceTrigger=PropertyChanged, Delay=750}" FontSize="14" Margin="10,0" Width="75" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Right">
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:TextBoxInputBehavior InputMode="DecimalInput"/>
+                                    </i:Interaction.Behaviors>
+                                </TextBox>
+                            </StackPanel>
+                        <StackPanel Grid.Column="5" Orientation="Horizontal">
+                            <Label Content="Max" Style="{StaticResource itemViewStyle}" Padding="0"/>
+                                <TextBox Text="{Binding Max, UpdateSourceTrigger=PropertyChanged, Delay=750}" FontSize="14" Margin="10,0" Width="75" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" >
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:TextBoxInputBehavior InputMode="DecimalInput"/>
+                                    </i:Interaction.Behaviors>
+                                </TextBox>
+                            </StackPanel>
+
+                        <StackPanel Grid.Column="6" Orientation="Horizontal">
+                            <Label Content="Inc" Style="{StaticResource itemViewStyle}" Padding="0"/>
+                                <TextBox Text="{Binding Inc, UpdateSourceTrigger=PropertyChanged, Delay=750}" FontSize="14" Margin="10,0" Width="75" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" >
+                                    <i:Interaction.Behaviors>
+                                        <behaviors:TextBoxInputBehavior InputMode="DecimalInput"/>
+                                    </i:Interaction.Behaviors>
+                                </TextBox>
+                            </StackPanel>
+
+                    </Grid>
+                    </Border>
+                </DataTemplate>
+
+
+                <DataTemplate DataType="{x:Type  optimization:IntegerOptimizerParameter}">
+                    <ContentPresenter ContentTemplate="{StaticResource numericTemplate}" />
+                </DataTemplate>
+
+
+                <DataTemplate DataType="{x:Type  optimization:DoubleOptimizerParameter}">
+                    <ContentPresenter ContentTemplate="{StaticResource numericTemplate}" />
+                </DataTemplate>
+
+
+                <DataTemplate DataType="{x:Type  optimization:EnumOptimizerParameter}">
+                    <Border BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="0,0,0,0">
+                        <Grid Margin="0" Background="Transparent"  MinHeight="35" MaxHeight="200">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="1" />
+                                <ColumnDefinition Width="3*" />
+                            </Grid.ColumnDefinitions>
+                            <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsChecked}"/>
+                            <Label Grid.Column="1" Content="{Binding DisplayName}" Style="{StaticResource itemViewStyle}" BorderThickness="1,0,0,0" BorderBrush="Black" Background="LightGray" />
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" Background="LightGray" >
+                                <Label Content="Default" Style="{StaticResource itemViewStyle}"  Padding="0"/>
+                                <Label Content="{Binding DefaultValue, Mode=OneTime}" IsEnabled="False" FontSize="14" Margin="10,0" Width="75" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"  />
+                            </StackPanel>
+                            <Border Grid.Column="3" Background="Black"/>
+                            <controls:EnumControl Grid.Column="4" DataContext="{Binding}" Margin="5,0,0,0" />
+                        
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type  optimization:BoolOptimizerParameter}" >
+                    <Border BorderThickness="0,0,0,1" BorderBrush="Gray" Margin="0,0,0,0">
+                        <Grid Margin="0" Background="Transparent" Height="35">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="25" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1" />
+                                <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <CheckBox VerticalAlignment="Center" HorizontalAlignment="Center" IsChecked="{Binding IsChecked}"/>
+                            <Label Grid.Column="1" Content="{Binding DisplayName}" Style="{StaticResource itemViewStyle}" BorderThickness="1,0,0,0" BorderBrush="Black" Background="LightGray" />
+
+
+
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Background="LightGray">
+                            <Label Content="Default" Style="{StaticResource itemViewStyle}"  Padding="0" />
+                            <CheckBox IsChecked="{Binding DefaultValue, Mode=OneTime}" IsEnabled="False" FontSize="14" Margin="10,0" Width="75" Height="25" VerticalContentAlignment="Center" HorizontalContentAlignment="Right"/>
+                        </StackPanel>
+                        <Border Grid.Column="3" Background="Black"/>
+
+                        <StackPanel Grid.Column="4"  Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding Value}"  VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="5,0,10,0"/>
+                                <Border BorderThickness="1,0,0,1" BorderBrush="DimGray" Margin="0,7"/>
+                                <CheckBox IsChecked="{Binding IsOptimize}" Content="Optimize"  VerticalAlignment="Center"  HorizontalAlignment="Left" Margin="10,0"/>
+                        </StackPanel>
+                        </Grid>
+                        </Border>
+                </DataTemplate>
+
+
+            </ListView.Resources>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Border x:Name="border" Background="Transparent">
+                                    <VisualStateManager.VisualStateGroups>
+                                        <VisualStateGroup x:Name="CommonStates">
+                                            <VisualState x:Name="Normal" />
+                                            <VisualState x:Name="Disabled" />
+                                        </VisualStateGroup>
+                                        <VisualStateGroup x:Name="SelectionStates">
+                                            <VisualState x:Name="Unselected" />
+                                            <VisualState x:Name="Selected">
+                                                <Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                  Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0" Value="LightBlue" />
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                            <VisualState x:Name="SelectedUnfocused">
+                                                <Storyboard>
+                                                    <ColorAnimationUsingKeyFrames Storyboard.TargetName="border"
+                                                                                  Storyboard.TargetProperty="(Panel.Background).(SolidColorBrush.Color)">
+                                                        <EasingColorKeyFrame KeyTime="0" Value="SkyBlue" />
+                                                    </ColorAnimationUsingKeyFrames>
+                                                </Storyboard>
+                                            </VisualState>
+                                        </VisualStateGroup>
+                                    </VisualStateManager.VisualStateGroups>
+                                    <ContentPresenter/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="0" />
+                    <Setter Property="Padding" Value="0" />
+                    
+                    <Setter Property="Focusable" Value="False"/>
+                   
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <StackPanel Orientation="Horizontal" Grid.Column="0" Grid.Row="4" Margin="0" HorizontalAlignment="Left">
+            <Label Content="Combination count:"/>
+            <Label Content="{Binding DefaultCombinationCount, UpdateSourceTrigger=LostFocus, Mode=OneWay}"/>
+        </StackPanel>
+
+
+        <StackPanel  Orientation="Horizontal" Grid.Column="0" Grid.Row="5" Margin="2" HorizontalAlignment="Right">
+            <Button FontSize="14" Width="75" Height="25" Content="OK" Margin="0,0,5,0" Click="ButtonBase_OnClick" />
+        </StackPanel>
+    </Grid>
+</Window>

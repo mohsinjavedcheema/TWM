@@ -1,0 +1,71 @@
+﻿{
+  "Name": "Light",
+  "IsDark": "False",
+  "Options": [
+    {
+      "Name": "Trade buy color",
+      "Code": "TradeBuyColor",
+      "Value": "#FF0000FF"
+    },
+    {
+      "Name": "Trade sell color",
+      "Code": "TradeSellColor",
+      "Value": "#FFFF00FF"
+    },
+    {
+      "Name": "Marker text color",
+      "Code": "MarkerTextColor",
+      "Value": "#FF000000"
+    },
+    {
+      "Name": "Axis text Color",
+      "Code": "TextColor",
+      "Value": "#1a1a1a"
+    },
+    {
+      "Name": "Color for down bars",
+      "Code": "DownBarColor",
+      "Value": "#FFFF0000"
+    },
+    {
+      "Name": "Color for up bars",
+      "Code": "UpBarColor",
+      "Value": "#FF32CD32"
+    },
+    {
+      "Name": "Candle body outline color",
+      "Code": "CandleOutlineColor",
+      "Value": "#FF000000"
+    },
+    {
+      "Name": "Candle wick color",
+      "Code": "CandleWickColor",
+      "Value": "#FF000000"
+    },
+    {
+      "Name": "Chart background color",
+      "Code": "ChartBackgroundColor",
+      "Value": "#f8f8ff"
+    },
+    {
+      "Name": "Chart vertical grid color",
+      "Code": "ChartVGridColor",
+      "Value": "#b8b8b8"
+    },
+    {
+      "Name": "Chart horizontal grid color",
+      "Code": "ChartHGridColor",
+      "Value": "#b8b8b8"
+    },
+    {
+      "Name": "Indicator separator width",
+      "Code": "IndicatorSeparator Width",
+      "Value": "1"
+    },
+    {
+      "Name": "Indicator separator color",
+      "Code": "IndicatorSeparatorColor",
+      "Value": "#1a1a1a"
+    }
+  ]
+}

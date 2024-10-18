@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="PrintMSBuildToolsPath">
+    <Message Text="MSBuildToolsPath: $(MSBuildToolsPath)" Importance="high" />
+  </Target>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9D8D8B7C-6B82-46B1-8BC7-8A4DDF05A716}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Twm.Custom</RootNamespace>
+    <AssemblyName>Twm.Custom</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <GenerateBndingRedirectsOutputType>true</GenerateBndingRedirectsOutputType>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ObfuscatedRelease|AnyCPU'">
+    <OutputPath>bin\ObfuscatedRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ObfuscatedRelease|x86'">
+    <OutputPath>bin\x86\ObfuscatedRelease\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Twm.Chart, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Twm.Chart.dll</HintPath>
+    </Reference>
+    <Reference Include="Twm.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Twm.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="Xceed.Wpf.AvalonDock, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit, Version=4.1.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
+      <HintPath>packages\Extended.Wpf.Toolkit.4.1.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commissions\%40NoCommission.cs" />
+    <Compile Include="Commissions\%40PerTradePercentFututures.cs" />
+    <Compile Include="Commissions\%40PerTradePercentSpot.cs" />
+    <Compile Include="Indicators\Dafault\%40ADXSuit.cs" />
+    <Compile Include="Indicators\Dafault\%40ATR.cs" />
+    <Compile Include="Indicators\Dafault\%40BollingerBands.cs" />
+    <Compile Include="Indicators\Dafault\%40EMA.cs" />
+    <Compile Include="Indicators\Dafault\%40Indicator.cs" />
+    <Compile Include="Indicators\Dafault\%40LineAngle.cs" />
+    <Compile Include="Indicators\Dafault\%40MACD.cs" />
+    <Compile Include="Indicators\Dafault\%40MAX.cs" />
+    <Compile Include="Indicators\Dafault\%40Momentum.cs" />
+    <Compile Include="Indicators\Dafault\%40ParabolicSAR.cs" />
+    <Compile Include="Indicators\Dafault\%40ROC.cs" />
+    <Compile Include="Indicators\Dafault\%40RSI.cs" />
+    <Compile Include="Indicators\Dafault\%40SeriesSync1.cs" />
+    <Compile Include="Indicators\Dafault\%40StDev.cs" />
+    <Compile Include="Indicators\Dafault\%40Stochastics.cs" />
+    <Compile Include="Indicators\Dafault\%40StochRSI.cs" />
+    <Compile Include="Indicators\Dafault\%40TEMA.cs" />
+    <Compile Include="Indicators\Dafault\%40TMA.cs" />
+    <Compile Include="Indicators\Dafault\%40Typical.cs" />
+    <Compile Include="Indicators\Dafault\%40VolatillitySwitch.cs" />
+    <Compile Include="Indicators\Dafault\%40Volume.cs" />
+    <Compile Include="Indicators\Dafault\%40VWMA.cs" />
+    <Compile Include="Indicators\Dafault\%40WMA.cs" />
+    <Compile Include="Indicators\Dafault\%40HMA.cs" />
+    <Compile Include="Indicators\Dafault\%40MIN.cs" />
+    <Compile Include="Indicators\Dafault\%40CCI.cs" />
+    <Compile Include="Indicators\Dafault\%40Leader.cs" />
+    <Compile Include="Indicators\Dafault\%40SMA.cs" />
+    <Compile Include="Indicators\Dafault\%40PriceChannel.cs" />
+    <Compile Include="Indicators\Dafault\%40VWAP.cs" />
+    <Compile Include="Indicators\Dafault\%40VolEma.cs" />
+    <Compile Include="Indicators\Dafault\%40SmartBollinger.cs" />
+    <Compile Include="Indicators\TestIndicators\BlankTest.cs" />
+    <Compile Include="OptimizationFitnesses\%40MaxGraalK.cs" />
+    <Compile Include="OptimizationFitnesses\%40MaxNetProfit.cs" />
+    <Compile Include="OptimizationFitnesses\%40MaxProfitFactor.cs" />
+    <Compile Include="OptimizationFitnesses\%40MaxSharp.cs" />
+    <Compile Include="OptimizationFitnesses\%40MaxSortino.cs" />
+    <Compile Include="OptimizationFitnesses\%40MinDrawDown.cs" />
+    <Compile Include="OptimizationFitnesses\%40MinDrawDownDays.cs" />
+    <Compile Include="OptimizationFitnesses\PTWinRate.cs" />
+    <Compile Include="Optimizers\%40DefaultOptimizer.cs" />
+    <Compile Include="Optimizers\%40GeneticOptimizer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strategies\%40Strategy.cs" />
+    <Compile Include="Strategies\Default\%40MACrossOver.cs" />
+    <Compile Include="Strategies\TestStrategies\IndicatorValStrat.cs" />
+    <Compile Include="Strategies\TestStrategies\TestStrategy.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\Twm.Core.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\CommonAssemblyInfo.cs">
+      <Link>Properties\CommonAssemblyInfo.cs</Link>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!--<Import Project="C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Microsoft.CSharp.targets" />-->
+  <PropertyGroup>
+    <PreBuildEvent>if exist "$(TargetPath).locked" del "$(TargetPath).locked"
+if exist "$(TargetPath)" if not exist "$(TargetPath).locked" move "$(TargetPath)" "$(TargetPath).locked"</PreBuildEvent>
+  </PropertyGroup>
+</Project>

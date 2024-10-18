@@ -1,0 +1,405 @@
+﻿<UserControl x:Class="Twm.Views.Orders.OrdersView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Twm.Views"
+             xmlns:classes="clr-namespace:Twm.Classes"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="150"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        
+
+        <ComboBox Grid.Row="1" Grid.Column="0" Margin="5,0,0,0"
+                VerticalContentAlignment="Center"    
+                DisplayMemberPath="Name"
+                SelectedValuePath="Name"
+                IsEnabled="{Binding ConnectionEnabled}"
+                SelectedItem="{Binding SelectedConnection}"
+                ItemsSource="{Binding Connections}"/>
+
+
+        <ComboBox Grid.Row="1" Grid.Column="1" Margin="5,0,0,0"
+                VerticalContentAlignment="Center"
+                SelectedItem="{Binding SelectedType}"
+                ItemsSource="{Binding TypesItems}"/>
+
+
+        <ListView Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3"  ItemsSource="{Binding Orders}" SelectedItem="{Binding SelectedOrder}">
+            <ListView.Resources>
+
+
+
+                <Style x:Key="headerLabel" TargetType="{x:Type Label}">
+                    <Setter Property="BorderBrush" Value="Gray" />
+                    <Setter Property="HorizontalAlignment" Value="Stretch" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="VerticalContentAlignment" Value="Center" />
+                    <Setter Property="Content" Value="{Binding}" />
+                </Style>
+
+                <DataTemplate x:Key="headerTemplate">
+                    <Grid Background="#FFF3F3F3"
+                          Height="{Binding ElementName=helperField0, Path=ActualHeight}"
+                          Width="{Binding ElementName=helperField0, Path=ActualWidth}">
+                        <Label BorderThickness="0,0,1,1" Padding="5,0,0,0" Style="{StaticResource headerLabel}" />
+                    </Grid>
+                </DataTemplate>
+
+                <DataTemplate x:Key="headerTemplate2">
+                    <Grid Background="#FFF3F3F3"
+                          Height="{Binding ElementName=helperField2, Path=ActualHeight}"
+                          Width="{Binding ElementName=helperField2, Path=ActualWidth}">
+                        <Label BorderThickness="0,0,1,1" Padding="5,0,0,0" Style="{StaticResource headerLabel}" />
+                    </Grid>
+                </DataTemplate>
+
+                <Style TargetType="{x:Type GridViewColumnHeader}">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                                <Border BorderThickness="1,1,0,1" BorderBrush="Black" Background="#FFF3F3F3">
+                                    <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Padding="5,0,5,0" VerticalAlignment="Center" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="OverridesDefaultStyle" Value="True" />
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="Height" Value="30" />
+                    <Setter Property="FontSize" Value="12" />
+                </Style>
+            </ListView.Resources>
+            <ListView.ContextMenu>
+                <ContextMenu >
+                    <MenuItem Header="Cancel" Command="{Binding CancelCommand}"/>
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListViewItem">
+                                <Grid Margin="0" Background="Transparent">
+                                    <Grid.Resources>
+
+
+                                        <Style x:Key="itemViewStyleState" TargetType="{x:Type Label}" BasedOn="{StaticResource itemViewStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding OrderState}"
+                                                             Value="Working">
+                                                    <Setter Property="Foreground" Value="Green"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Grid.Resources>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField2, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField2, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+                                        <ColumnDefinition Width="{Binding ElementName=helperField0, Path=ActualWidth}" />
+
+                                    </Grid.ColumnDefinitions>
+
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="0"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                               Padding="5,0,0,0"
+                                               Background="{TemplateBinding Background}" 
+                                            Content="{Binding Instrument}" />
+                                    </Border>
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="1"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,0,0"
+                                            Background="{TemplateBinding Background}" 
+                                            Content="{Binding ConnectionName}" />
+                                    </Border>
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="2"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,0,0"
+                                            Background="{TemplateBinding Background}" 
+                                            Content="{Binding OrderAction}" />
+                                    </Border>
+
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="3"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,0,0"
+                                            Background="{TemplateBinding Background}" 
+                                            Content="{Binding OrderType}" />
+                                    </Border>
+
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="4"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,5,0"
+                                            Background="{TemplateBinding Background}" 
+                                            HorizontalContentAlignment="Right"
+                                            Content="{Binding Quantity}" />
+                                    </Border>
+
+                                    <Border BorderThickness="1,0,0,0"
+                                        Grid.Column="5"
+                                        BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,5,0"
+                                            Background="{TemplateBinding Background}" 
+                                            HorizontalContentAlignment="Right"
+                                            Content="{Binding LimitPrice}" 
+                                            ContentStringFormat="{Binding ValueFormat}"
+                                            />
+                                    </Border>
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="6"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,5,0"
+                                            Background="{TemplateBinding Background}" 
+                                            HorizontalContentAlignment="Right"
+                                            Content="{Binding StopPrice}" 
+                                            
+                                        />
+                                    </Border>
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="7"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyleState}"
+                                            FontSize="12"
+                                            Padding="5,0,0,0"
+                                            Background="{TemplateBinding Background}" 
+                                            Content="{Binding OrderState}" />
+                                    </Border>
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="8"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,5,0"
+                                            Background="{TemplateBinding Background}" 
+                                            HorizontalContentAlignment="Right"
+                                            Content="{Binding FillPrice}" 
+                                            ContentStringFormat="{Binding ValueFormat}"
+                                        />
+                                    </Border>
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="9"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,0,0"
+                                            Background="{TemplateBinding Background}" 
+                                            Content="{Binding Name}" />
+                                    </Border>
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="10"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,0,0"
+                                            Background="{TemplateBinding Background}" 
+                                            Content="{Binding Guid}" />
+                                    </Border>
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="11"
+                                            BorderBrush="Gray">
+                                        <Label                                             
+                                            FontSize="12"
+                                            Padding="5,0,0,0"
+                                            Background="{TemplateBinding Background}" 
+                                            Content="{Binding OrderFillDate}" 
+                                            ToolTipService.ShowDuration="1000"
+                                            ContentStringFormat="dd.MM.yyyy HH:mm">
+                                            <Label.ToolTip>
+                                                <ToolTip Content="{Binding OrderFillDate}"
+                                                         ContentStringFormat="dd.MM.yyyy HH:mm" />
+                                            </Label.ToolTip>
+                                            <Label.Style>
+                                                <Style TargetType="Label" BasedOn="{StaticResource itemViewStyle}">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding OrderFillDate}" Value="{x:Null}">
+                                                            <Setter Property="Content" Value="" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Label.Style>
+                                        </Label>
+                                    </Border>
+                                    <Border BorderThickness="1,0,0,0"
+                                            Grid.Column="12"
+                                            BorderBrush="Gray">
+                                        <Label 
+                                            Style ="{StaticResource itemViewStyle}"
+                                            FontSize="12"
+                                            Padding="5,0,0,0"
+                                            Background="{TemplateBinding Background}" 
+                                            Content="{Binding OrderInitDate}" 
+                                            ToolTipService.ShowDuration="1000"
+                                            ContentStringFormat="dd.MM.yyyy HH:mm">
+                                            <Label.ToolTip>
+                                                <ToolTip Content="{Binding OrderInitDate}"
+                                                         ContentStringFormat="dd.MM.yyyy HH:mm" />
+                                            </Label.ToolTip>
+                                        </Label>
+                                    </Border>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Margin" Value="2,0" />
+                    <Setter Property="Padding" Value="0" />
+                    <Setter Property="Height" Value="25" />
+                    <Style.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="true" />
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Background" Value="LightGray" />
+                        </MultiTrigger>
+
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="{DynamicResource lInstrument}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    classes:GridViewSort.PropertyName="Instrument"
+                                    HeaderTemplate="{StaticResource headerTemplate}" />
+                    <GridViewColumn Header="Connection"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="ConnectionName" />
+                    <GridViewColumn Header="{DynamicResource lOrderAction}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="OrderAction" />
+                    <GridViewColumn Header="{DynamicResource lOrderType}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="OrderType" />
+                    <GridViewColumn Header="{DynamicResource lQty}"
+                                    Width="{Binding ElementName=helperField2, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate2}"
+                                    classes:GridViewSort.PropertyName="Quantity" />
+                    <GridViewColumn Header="{DynamicResource lOrderLimit}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="LimitPrice"/>
+                    <GridViewColumn Header="{DynamicResource lOrderStop}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="StopPrice"/>
+                    <GridViewColumn Header="{DynamicResource lOrderState}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="OrderState" />
+                    <GridViewColumn Header="{DynamicResource lAvgPrice}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="FillPrice" />
+                    <GridViewColumn Header="{DynamicResource lOrderName}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="Name" />
+                    <GridViewColumn Header="{DynamicResource lID}"
+                                    Width="{Binding ElementName=helperField2, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate2}"
+                                    classes:GridViewSort.PropertyName="Id" />
+                    <GridViewColumn Header="{DynamicResource lFillTime}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="OrderFillDate" />
+                    <GridViewColumn Header="{DynamicResource lInitTime}"
+                                    Width="{Binding ElementName=helperField0, Path=ActualWidth}"
+                                    HeaderTemplate="{StaticResource headerTemplate}"
+                                    classes:GridViewSort.PropertyName="OrderInitDate" />
+                </GridView>
+            </ListView.View>
+
+        </ListView>
+
+
+
+        <!--This is the hidden helper Grid which does the resizing -->
+        <Grid Visibility="Hidden" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="3" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="0.5*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="26" />
+                <!--Correction Width-->
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40" />
+                <RowDefinition Height="24*" />
+            </Grid.RowDefinitions>
+            <!--This is the hidden helper Field which is used to bind to, using the "Fill" column of the helper grid-->
+            <Grid Grid.Column="0" Grid.Row="0" x:Name="helperField0" />
+            <Grid Grid.Column="3" Grid.Row="0" x:Name="helperField2" />
+        </Grid>
+
+    </Grid>
+</UserControl>
